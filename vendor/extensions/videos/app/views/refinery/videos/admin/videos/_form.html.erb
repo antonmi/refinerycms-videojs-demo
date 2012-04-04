@@ -1,0 +1,30 @@
+<%= form_for [refinery, :videos_admin, @video] do |f| -%>
+  <%= render '/refinery/admin/error_messages',
+              :object => @video,
+              :include_object_name => true %>
+
+
+    <div class='field'>
+      <% if action_name =~ /(edit)|(update)/ %>
+          <%= link_to t('.download_current'), @video.url,
+                      :title => @video.title %>
+          <em><%= t('.or')%></em><%= t('.replace') %>
+          <%= f.file_field :file %>
+      <% else %>
+          <% # we must only hint at multiple when it's a *new* record otherwise update fails. %>
+          <%= f.file_field :file, :multiple => (true unless @video.persisted?) %>
+      <% end %>
+    </div>
+
+    <div class='field' id='maximum_file_size'>
+      <label>
+        <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
+      </label>
+    </div>
+
+
+    <%= render '/refinery/admin/form_actions', :f => f,
+             :continue_editing => false,
+             :delete_title => t('delete', :scope => 'refinery.videos.admin.videos.video'),
+             :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @video.file_name) %>
+<% end -%>

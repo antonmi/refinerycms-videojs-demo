@@ -1,0 +1,11 @@
+<% content_for :body_content_left do %>
+  <ul id="videos">
+    <% @videos.each do |video| %>
+      <li>
+        <%= link_to video.file_name, refinery.videos_video_path(video) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= render '/refinery/content_page' %>
