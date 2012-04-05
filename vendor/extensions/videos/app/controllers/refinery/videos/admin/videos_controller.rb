@@ -7,6 +7,11 @@ module Refinery
                 :title_attribute => 'file_name', :xhr_paging => true
 
 
+        def show
+          @video = Video.find(params[:id]).dragonfly_attachments[:file].path.split('/public')[1]
+        end
+
+
         def create
           @resources = Video.create_resources(params[:video])
           @resource = @resources.detect { |r| !r.valid? }

@@ -7,8 +7,6 @@ gem 'rails', '3.2.3'
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'pry'
-  gem 'pry-doc'
   gem 'pry-rails'
 end
 
