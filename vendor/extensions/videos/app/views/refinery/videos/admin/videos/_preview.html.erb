@@ -8,9 +8,9 @@
        controls preload="auto" width="640" height="264"
 
        data-setup='{}'>
-  <source src="<%= @video %>" type='video/mp4' />
+  <source src="<%= @video.url %>" type='video/mp4' />
 
 </video>
 
-<%= link_to 'download', @video %>
+<%= image_tag @video.url %>
 

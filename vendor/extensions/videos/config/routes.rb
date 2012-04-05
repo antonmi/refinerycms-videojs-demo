@@ -1,5 +1,5 @@
 Refinery::Core::Engine.routes.append do
-
+  match '/system/videos/*dragonfly', :to => Dragonfly[:refinery_videos]
   # Frontend routes
   namespace :videos do
     resources :videos, :path => '', :only => [:index, :show]

@@ -8,7 +8,7 @@ module Refinery
 
 
         def show
-          @video = Video.find(params[:id]).dragonfly_attachments[:file].path.split('/public')[1]
+          @video = Video.find(params[:id])
         end
 
 
