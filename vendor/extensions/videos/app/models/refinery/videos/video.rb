@@ -3,19 +3,29 @@ require 'dragonfly'
 module Refinery
   module Videos
     class Video < Refinery::Core::BaseModel
-      CONFIG_OPTIONS = [:autoplay, :width, :height, :controls, :autoplay, :preload, :poster, :loop]
+      CONFIG_OPTIONS = [:autoplay, :width, :height, :controls, :preload, :poster, :loop]
       ::Refinery::Videos::Dragonfly.setup!
-      attr_accessible :id, :file
+      attr_accessible :id, :file, :config, *CONFIG_OPTIONS
       video_accessor :file
       serialize :config, Hash
 
-      delegate :ext, :size, :mime_type, :url, :to => :file
+      delegate :ext, :size, :mime_type, :url, :to => :file, :allow_nil => true
 
-      attr_accessor *CONFIG_OPTIONS
-      attr_accessible *CONFIG_OPTIONS
+      #attr_accessor *CONFIG_OPTIONS
+      #attr_accessible *CONFIG_OPTIONS
 
-      after_initialize :init_config
-      before_save :update_config
+      CONFIG_OPTIONS.each do |option|
+        define_method option do
+          self.config[option]
+        end
+        define_method "#{option}=" do |value|
+          self.config[option] = value
+        end
+      end
+
+
+      #after_initialize :init_config
+      #before_save :update_config
 
 
       self.table_name = 'refinery_videos'
@@ -52,17 +62,17 @@ module Refinery
 
       private
 
-      def init_config
-        CONFIG_OPTIONS.each do |option|
-          self.send("#{option.to_s}=", config[option])
-        end
-      end
-
-      def update_config
-        CONFIG_OPTIONS.each do |option|
-          config[option] = self.send(option)
-        end
-      end
+      #def init_config
+      #  CONFIG_OPTIONS.each do |option|
+      #    self.send("#{option.to_s}=", config[option])
+      #  end
+      #end
+      #
+      #def update_config
+      #  CONFIG_OPTIONS.each do |option|
+      #    config[option] = self.send(option)
+      #  end
+      #end
 
     end
   end
