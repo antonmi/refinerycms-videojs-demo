@@ -3,13 +3,23 @@ require 'dragonfly'
 module Refinery
   module Videos
     class Video < Refinery::Core::BaseModel
+      CONFIG_OPTIONS = [:autoplay, :width, :height, :controls, :autoplay, :preload, :poster, :loop]
       ::Refinery::Videos::Dragonfly.setup!
       attr_accessible :id, :file
       video_accessor :file
+      serialize :config, Hash
+
       delegate :ext, :size, :mime_type, :url, :to => :file
 
+      attr_accessor *CONFIG_OPTIONS
+      attr_accessible *CONFIG_OPTIONS
+
+      after_initialize :init_config
+      before_save :update_config
+
+
       self.table_name = 'refinery_videos'
-    
+
       acts_as_indexed :fields => [:file_name, :file_ext]
 
       validates :file_name, :presence => true, :uniqueness => true
@@ -37,6 +47,20 @@ module Refinery
           end
 
           resources
+        end
+      end
+
+      private
+
+      def init_config
+        CONFIG_OPTIONS.each do |option|
+          self.send("#{option.to_s}=", config[option])
+        end
+      end
+
+      def update_config
+        CONFIG_OPTIONS.each do |option|
+          config[option] = self.send(option)
         end
       end
 

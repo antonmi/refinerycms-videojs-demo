@@ -1,14 +1,14 @@
 <%= form_for [refinery, :videos_admin, @video] do |f| -%>
-  <%= render '/refinery/admin/error_messages',
-              :object => @video,
-              :include_object_name => true %>
+    <%= render '/refinery/admin/error_messages',
+               :object => @video,
+               :include_object_name => true %>
 
 
     <div class='field'>
       <% if action_name =~ /(edit)|(update)/ %>
           <%= link_to t('.download_current'), @video.url,
                       :title => @video.title %>
-          <em><%= t('.or')%></em><%= t('.replace') %>
+          <em><%= t('.or')%> </em><%= t('.replace') %>
           <%= f.file_field :file %>
       <% else %>
           <% # we must only hint at multiple when it's a *new* record otherwise update fails. %>
@@ -22,9 +22,44 @@
       </label>
     </div>
 
+    <div>
+      <div class='field'>
+        <label>Width</label>
+        <%= f.text_field :width %>
+      </div>
+      <div class='field'>
+        <label>Height</label>
+        <%= f.text_field :height %>
+      </div>
+      <div class='field'>
+        <label>
+        <%= f.check_box :autoplay, {}, "true", "false" %>
+          <span>Autoplay</span>
+        </label>
+      </div>
+      <div class='field'>
+        <label>
+        <%= f.check_box :controls, {}, "true", "false" %>
+          <span>Show Controls</span>
+        </label>
+      </div>
+      <div class='field'>
+        <label>
+          <%= f.check_box :preload, {}, "true", "false" %>
+          <span>Preload video</span>
+        </label>
+      </div>
+      <div class='field'>
+        <label>
+          <%= f.check_box :loop, {}, "true", "false" %>
+          <span>Loop Video</span>
+        </label>
+      </div>
+
+    </div>
 
     <%= render '/refinery/admin/form_actions', :f => f,
-             :continue_editing => false,
-             :delete_title => t('delete', :scope => 'refinery.videos.admin.videos.video'),
-             :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @video.file_name) %>
+               :continue_editing => false,
+               :delete_title => t('delete', :scope => 'refinery.videos.admin.videos.video'),
+               :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @video.file_name) %>
 <% end -%>

@@ -5,10 +5,12 @@
 
 
 <video id="example_video_1" class="video-js vjs-default-skin"
-       controls preload="auto" width="640" height="264"
-
-       data-setup='{}'>
+       width="<%= @video.config[:width] %>" height="<%= @video.config[:height] %>"
+       data-setup=' {"controls": "<%= @video.config[:controls] %>",
+       "autoplay": "<%= @video.config[:autoplay] %>",
+       "preload": "<%= @video.config[:preload] %>",
+       "loop": "<%= @video.config[:loop] %>",
+       "poster": "<%= @video.config[:poster] %>"}'>
   <source src="<%= @video.url %>" type='video/mp4' />
-
 </video>
 

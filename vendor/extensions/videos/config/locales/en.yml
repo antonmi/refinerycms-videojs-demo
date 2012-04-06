@@ -18,6 +18,10 @@ en:
             view_live_html: View this video live <br/><em>(opens in a new window)</em>
             edit: Edit this video
             delete: Remove this video forever
+          form:
+            download_current: Use current video
+            or: or
+            replace: replace with this one
       videos:
         show:
           other: Other Videos
