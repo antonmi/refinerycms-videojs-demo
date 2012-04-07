@@ -5,7 +5,7 @@ module Refinery
     class Video < Refinery::Core::BaseModel
       CONFIG_OPTIONS = [:autoplay, :width, :height, :controls, :preload, :poster, :loop]
       ::Refinery::Videos::Dragonfly.setup!
-      attr_accessible :id, :file, :config, *CONFIG_OPTIONS
+      attr_accessible :file, :config, *CONFIG_OPTIONS
       video_accessor :file
       serialize :config, Hash
 
