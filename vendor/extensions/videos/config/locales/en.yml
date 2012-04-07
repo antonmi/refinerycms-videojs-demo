@@ -22,6 +22,7 @@ en:
             download_current: Use current video
             or: or
             replace: replace with this one
+            maximum_file_size: "Maximum file size: %{bytes}"
       videos:
         show:
           other: Other Videos
