@@ -21,3 +21,6 @@ if defined?(::Refinery::Page) && ::Refinery::Page.where(:link_url => url).empty?
   end
 end
 
+
+# Added by Refinery CMS Pages extension
+Refinery::Pages::Engine.load_seed

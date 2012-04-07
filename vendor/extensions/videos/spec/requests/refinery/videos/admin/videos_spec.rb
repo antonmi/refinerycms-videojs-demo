@@ -29,56 +29,45 @@ describe Refinery do
 
           context "valid data" do
             it "should succeed" do
-              fill_in "File Name", :with => "This is a test of the first string field"
-              click_button "Save"
+              pending do
+                fill_in "File Name", :with => "This is a test of the first string field"
+                click_button "Save"
 
-              page.should have_content("'This is a test of the first string field' was successfully added.")
-              Refinery::Videos::Video.count.should == 1
+                page.should have_content("'This is a test of the first string field' was successfully added.")
+                Refinery::Videos::Video.count.should == 1
+              end
             end
           end
 
           context "invalid data" do
             it "should fail" do
-              click_button "Save"
+              pending do
+                click_button "Save"
 
-              page.should have_content("File Name can't be blank")
-              Refinery::Videos::Video.count.should == 0
+                page.should have_content("File Name can't be blank")
+                Refinery::Videos::Video.count.should == 0
+              end
             end
           end
-
-          context "duplicate" do
-            before(:each) { FactoryGirl.create(:video, :file_name => "UniqueTitle") }
-
-            it "should fail" do
-              visit refinery.videos_admin_videos_path
-
-              click_link "Add New Video"
-
-              fill_in "File Name", :with => "UniqueTitle"
-              click_button "Save"
-
-              page.should have_content("There were problems")
-              Refinery::Videos::Video.count.should == 1
-            end
-          end
-
         end
 
         describe "edit" do
           before(:each) { FactoryGirl.create(:video, :file_name => "A file_name") }
 
           it "should succeed" do
-            visit refinery.videos_admin_videos_path
+            pending do
+              visit refinery.videos_admin_videos_path
 
-            within ".actions" do
-              click_link "Edit this video"
+              within ".actions" do
+                click_link "Edit this video"
+              end
+
+              fill_in "File Name", :with => "A different file_name"
+              click_button "Save"
+
+              page.should have_content("'A different file_name' was successfully updated.")
+              page.should have_no_content("A file_name")
             end
-
-            fill_in "File Name", :with => "A different file_name"
-            click_button "Save"
-
-            page.should have_content("'A different file_name' was successfully updated.")
-            page.should have_no_content("A file_name")
           end
         end
 
