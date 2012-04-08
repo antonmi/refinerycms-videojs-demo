@@ -40,6 +40,9 @@ GEM
       activerecord (>= 3.0.0)
     babosa (0.3.7)
     bcrypt-ruby (3.0.1)
+    bson (1.6.2)
+    bson_ext (1.6.2)
+      bson (~> 1.6.2)
     builder (3.0.0)
     coderay (1.0.6)
     coffee-rails (3.2.2)
@@ -78,11 +81,19 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.7.1)
     mime-types (1.18)
+    mongo (1.6.2)
+      bson (~> 1.6.2)
+    mongo_mapper (0.11.1)
+      activemodel (~> 3.0)
+      activesupport (~> 3.0)
+      plucky (~> 0.4.0)
     multi_json (1.2.0)
     orm_adapter (0.0.7)
     paper_trail (2.6.3)
       activerecord (~> 3.0)
       railties (~> 3.0)
+    plucky (0.4.4)
+      mongo (~> 1.5)
     polyglot (0.3.3)
     pry (0.9.8.4)
       coderay (~> 1.0.5)
@@ -192,8 +203,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bson_ext
   coffee-rails (~> 3.2.1)
   jquery-rails
+  mongo_mapper
   pry-rails
   rails (= 3.2.3)
   refinerycms (~> 2.0.0)

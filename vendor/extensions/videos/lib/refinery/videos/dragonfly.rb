@@ -17,7 +17,9 @@ module Refinery
         def configure!
           app_videos = ::Dragonfly[:refinery_videos]
           app_videos.configure_with(:rails) do |c|
-            c.datastore.root_path = Refinery::Videos.datastore_root_path
+            binding.pry
+            c.datastore = ::Dragonfly::DataStorage::MongoDataStore.new(:db => MongoMapper.database)
+            #c.datastore.root_path = Refinery::Videos.datastore_root_path
             c.url_format = Refinery::Videos.dragonfly_url_format
             c.secret = Refinery::Videos.dragonfly_secret
           end

@@ -3,6 +3,7 @@ require 'dragonfly'
 module Refinery
   module Videos
     class Video < Refinery::Core::BaseModel
+      #include Mongoid::Document
       self.table_name = 'refinery_videos'
       acts_as_indexed :fields => [:file_name, :file_ext]
 

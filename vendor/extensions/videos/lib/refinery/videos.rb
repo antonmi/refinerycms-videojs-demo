@@ -10,6 +10,7 @@ module Refinery
     require 'refinery/videos/engine'
     require 'refinery/videos/configuration'
     autoload :Dragonfly, 'refinery/videos/dragonfly'
+    autoload :Validators, 'refinery/videos/validators'
 
     class << self
       attr_writer :root
