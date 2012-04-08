@@ -6,12 +6,22 @@ module Refinery
         crudify :'refinery/videos/video',
                 :title_attribute => 'file_name', :xhr_paging => true
 
-
         def show
-
           @video = Video.find(params[:id])
         end
 
+        def new
+          @video = Video.new if @video.nil?
+        end
+
+        def insert
+          @videos = Video.all
+        end
+
+        def append_to_wym
+          @video = Video.find(params[:id])
+          @html_for_wym = @video.to_html
+        end
 
         def create
           @resources = Video.create_resources(params[:video])
@@ -39,6 +49,7 @@ module Refinery
             end
           end
         end
+
 
       end
     end

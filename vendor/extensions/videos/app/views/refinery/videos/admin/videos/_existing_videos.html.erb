@@ -1,0 +1,23 @@
+<section id="records" class="videos">
+  <div class="pagination_container" style="min-height: 128px; ">
+    <ul id='sortable_list' class="ui-sortable">
+      <%= render :partial => 'existing_video', :collection => @videos %>
+    </ul>
+  </div>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+        $videos = $('section.videos li');
+        $videos.on('click', function(){
+            $videos.removeClass('selected');
+            $(this).addClass('selected');
+        })
+    })
+</script>
+
+<style type="text/css">
+  li.selected{
+      border: 4px solid #22A7F2
+  }
+</style>

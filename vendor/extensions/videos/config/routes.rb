@@ -1,5 +1,6 @@
 Refinery::Core::Engine.routes.append do
   match '/system/videos/*dragonfly', :to => Dragonfly[:refinery_videos]
+
   # Frontend routes
   namespace :videos do
     resources :videos, :path => '', :only => [:index, :show]
@@ -11,6 +12,8 @@ Refinery::Core::Engine.routes.append do
       resources :videos do
         collection do
           post :update_positions
+          get :insert
+          get :append_to_wym
         end
       end
     end

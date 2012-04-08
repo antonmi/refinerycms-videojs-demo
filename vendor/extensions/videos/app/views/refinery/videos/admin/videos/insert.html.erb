@@ -1,0 +1,21 @@
+<div id='dialog_main'>
+
+    <%= render 'existing_videos' %>
+
+      <%= render '/refinery/admin/form_actions', :f => nil,
+                 :cancel_url => '',
+                 :hide_delete => true,
+                 :submit_button_text => 'Insert',
+                 :cancel_button_text => t('cancel', :scope => 'refinery.admin.form_actions'),
+                 :cancel_title => nil %>
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+  $('#submit_button').on('click', function(){
+    var id=$('li.video.selected').attr('id');
+    $.get('<%= refinery.append_to_wym_videos_admin_videos_path %>', {'id' : id}, null, 'script')
+  })
+  })
+</script>

@@ -6,11 +6,11 @@
 
 <video id="example_video_1" class="video-js vjs-default-skin"
        width="<%= @video.config[:width] %>" height="<%= @video.config[:height] %>"
-       data-setup=' {"controls": "<%= @video.config[:controls] %>",
-       "autoplay": "<%= @video.config[:autoplay] %>",
-       "preload": "<%= @video.config[:preload] %>",
-       "loop": "<%= @video.config[:loop] %>",
-       "poster": "<%= @video.config[:poster] %>"}'>
-  <source src="<%= @video.url %>" type='video/mp4' />
+       controls="<%= @video.config[:controls] || "auto" %>"
+       data-setup=' {"autoplay": "<%= @video.config[:autoplay] || "auto" %>",
+       "preload": "<%= @video.config[:preload] || "auto" %>",
+       "loop": "<%= @video.config[:loop] || "auto" %>",
+       "poster": "<%= @video.config[:poster] || "auto" %>"}'>
+  <source src="<%= @video.url %>" type="<%= @video.mime_type %>" />
 </video>
 

@@ -6,15 +6,13 @@ module Refinery
       self.table_name = 'refinery_videos'
       acts_as_indexed :fields => [:file_name, :file_ext]
 
-      attr_accessible :file, :config, *CONFIG_OPTIONS
-
       ################## Video config options
       serialize :config, Hash
-
       CONFIG_OPTIONS = [
-        :autoplay, :width, :height, :controls,
-        :preload, :poster, :loop
+          :autoplay, :width, :height, :controls,
+          :preload, :poster, :loop
       ]
+      attr_accessible :file, :config, *CONFIG_OPTIONS
 
       # Create getters and setters
       CONFIG_OPTIONS.each do |option|
@@ -42,8 +40,24 @@ module Refinery
       validates :file, :presence => true
       #######################################
 
+
       def title
         CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
+      end
+
+      def to_html
+        data_setup = []
+        CONFIG_OPTIONS.each do |option|
+          if option && (option != :width && option != :height && option != :controls)
+            data_setup << "\"#{option}\": \"#{config[option]}\""
+          end
+        end
+        sources = ["<source src='#{self.url}' type='#{self.mime_type}'/>"]
+
+        html = <<EOS
+        <video id="example_video_1" class="video-js vjs-default-skin" width="#{config[:width]}" height="#{config[:height]}" controls="#{config[:controls] || "auto"}" data-setup=' {#{data_setup.join(',')}}'>#{sources.join}</video>
+EOS
+        html.html_safe
       end
 
       class << self
@@ -53,19 +67,29 @@ module Refinery
         #end
 
         def create_resources(params)
+          add_config!(params)
           resources = []
 
           unless params.present? and params[:file].is_a?(Array)
             resources << create(params)
           else
             params[:file].each do |resource|
-              resources << create(:file => resource)
+              resources << create(:file => resource, :config => params[:config])
             end
           end
 
           resources
         end
+
+        def add_config!(params)
+          params.merge!(:config => {})
+          CONFIG_OPTIONS.each do |option|
+            params[:config].merge!(option => params[option])
+          end
+        end
       end
+
+
     end
   end
 end
