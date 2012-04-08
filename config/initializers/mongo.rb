@@ -1,2 +1,2 @@
-MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
-MongoMapper.database = "#refinery_exp_#{Rails.env}"
+#MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
+#MongoMapper.database = "#refinery_exp_#{Rails.env}"
