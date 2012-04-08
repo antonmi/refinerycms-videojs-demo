@@ -3,17 +3,20 @@ require 'dragonfly'
 module Refinery
   module Videos
     class Video < Refinery::Core::BaseModel
-      CONFIG_OPTIONS = [:autoplay, :width, :height, :controls, :preload, :poster, :loop]
-      ::Refinery::Videos::Dragonfly.setup!
-      attr_accessible :id, :file, :config, *CONFIG_OPTIONS
-      video_accessor :file
+      self.table_name = 'refinery_videos'
+      acts_as_indexed :fields => [:file_name, :file_ext]
+
+      attr_accessible :file, :config, *CONFIG_OPTIONS
+
+      ################## Video config options
       serialize :config, Hash
 
-      delegate :ext, :size, :mime_type, :url, :to => :file, :allow_nil => true
+      CONFIG_OPTIONS = [
+        :autoplay, :width, :height, :controls,
+        :preload, :poster, :loop
+      ]
 
-      #attr_accessor *CONFIG_OPTIONS
-      #attr_accessible *CONFIG_OPTIONS
-
+      # Create getters and setters
       CONFIG_OPTIONS.each do |option|
         define_method option do
           self.config[option]
@@ -22,18 +25,22 @@ module Refinery
           self.config[option] = value
         end
       end
+      #######################################
 
+      ############################ Dragonfly
+      ::Refinery::Videos::Dragonfly.setup!
+      video_accessor :file
 
-      #after_initialize :init_config
-      #before_save :update_config
+      delegate :ext, :size, :mime_type, :url,
+               :to        => :file,
+               :allow_nil => true
 
+      #######################################
 
-      self.table_name = 'refinery_videos'
-
-      acts_as_indexed :fields => [:file_name, :file_ext]
-
+      ########################### Validations
       validates :file_name, :presence => true, :uniqueness => true
       validates :file, :presence => true
+      #######################################
 
       def title
         CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
@@ -59,21 +66,6 @@ module Refinery
           resources
         end
       end
-
-      private
-
-      #def init_config
-      #  CONFIG_OPTIONS.each do |option|
-      #    self.send("#{option.to_s}=", config[option])
-      #  end
-      #end
-      #
-      #def update_config
-      #  CONFIG_OPTIONS.each do |option|
-      #    config[option] = self.send(option)
-      #  end
-      #end
-
     end
   end
 end
