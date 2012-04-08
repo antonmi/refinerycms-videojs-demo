@@ -1,0 +1,19 @@
+
+
+  
+
+<ul style='display:none; cursor: pointer' id='add_video'>
+  <li>
+        <a href='<%= refinery.insert_videos_admin_videos_path(:dialog => true) %>'>Add Video</a>
+  </li>
+</ul>"
+
+<script type="text/javascript">
+window.onload = function ()
+{
+$('.wym_area_top').append($('#add_video').show());
+
+};
+
+
+</script>
