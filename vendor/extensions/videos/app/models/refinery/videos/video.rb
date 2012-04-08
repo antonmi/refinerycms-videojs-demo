@@ -88,7 +88,7 @@ EOS
 
         def add_config!(params)
           params.merge!(:config => {})
-          CONFIG_OPTIONS.each do |option|
+          CONFIG_OPTIONS.keys.each do |option|
             params[:config].merge!(option => params[option])
           end
         end
