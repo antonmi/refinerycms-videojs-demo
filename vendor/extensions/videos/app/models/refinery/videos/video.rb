@@ -8,14 +8,15 @@ module Refinery
 
       ################## Video config options
       serialize :config, Hash
-      CONFIG_OPTIONS = [
-          :autoplay, :width, :height, :controls,
-          :preload, :poster, :loop
-      ]
-      attr_accessible :file, :config, *CONFIG_OPTIONS
+      CONFIG_OPTIONS = {
+          :autoplay => "false", :width => "400", :height => "300",
+          :controls => "true", :preload => "true",
+          :poster => "false", :loop => "false"
+      }
+      attr_accessible :file, :config, *CONFIG_OPTIONS.keys
 
       # Create getters and setters
-      CONFIG_OPTIONS.each do |option|
+      CONFIG_OPTIONS.keys.each do |option|
         define_method option do
           self.config[option]
         end
@@ -40,6 +41,10 @@ module Refinery
       validates :file, :presence => true
       #######################################
 
+      ########################### Callbacks
+      after_initialize :set_default_config
+      #####################################
+
 
       def title
         CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
@@ -47,7 +52,7 @@ module Refinery
 
       def to_html
         data_setup = []
-        CONFIG_OPTIONS.each do |option|
+        CONFIG_OPTIONS.keys.each do |option|
           if option && (option != :width && option != :height && option != :controls)
             data_setup << "\"#{option}\": \"#{config[option]}\""
           end
@@ -89,6 +94,13 @@ EOS
         end
       end
 
+      private
+
+      def set_default_config
+        CONFIG_OPTIONS.each do |option, value|
+           self.send("#{option}=", value)
+        end if new_record?
+      end
 
     end
   end
