@@ -53,14 +53,14 @@ module Refinery
       def to_html
         data_setup = []
         CONFIG_OPTIONS.keys.each do |option|
-          if option && (option != :width && option != :height && option != :controls)
-            data_setup << "\"#{option}\": \"#{config[option]}\""
+          if option && (option != :width && option != :height)
+            data_setup << "\"#{option}\": #{config[option] || '\"auto\"'}"
           end
         end
         sources = ["<source src='#{self.url}' type='#{self.mime_type}'/>"]
 
         html = <<EOS
-        <video id="example_video_1" class="video-js vjs-default-skin" width="#{config[:width]}" height="#{config[:height]}" controls="#{config[:controls] || "auto"}" data-setup=' {#{data_setup.join(',')}}'>#{sources.join}</video>
+        <video id="example_video_1" class="video-js vjs-default-skin" width="#{config[:width]}" height="#{config[:height]}" data-setup=' {#{data_setup.join(',')}}'>#{sources.join}</video>
 EOS
         html.html_safe
       end
