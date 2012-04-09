@@ -16,6 +16,12 @@ Refinery::Core::Engine.routes.append do
           get :append_to_wym
         end
       end
+
+      resources :video_sets do
+        collection do
+          post :update_positions
+        end
+      end
     end
   end
 

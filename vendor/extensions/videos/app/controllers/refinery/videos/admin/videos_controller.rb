@@ -10,9 +10,9 @@ module Refinery
           @video = Video.find(params[:id])
         end
 
-        def new
-          @video = Video.new if @video.nil?
-        end
+        #def new
+        #  @video = Video.new if @video.nil?
+        #end
 
         def insert
           @videos = Video.all
@@ -23,32 +23,32 @@ module Refinery
           @html_for_wym = @video.to_html
         end
 
-        def create
-          @resources = Video.create_resources(params[:video])
-          @resource = @resources.detect { |r| !r.valid? }
-
-          unless params[:insert]
-            if @resources.all?(&:valid?)
-              flash.notice = t('created', :scope => 'refinery.crudify', :what => "'#{@resources.map(&:title).join("', '")}'")
-              unless from_dialog?
-                redirect_to refinery.admin_videos_path
-              else
-                @dialog_successful = true
-                render :nothing => true, :layout => true
-              end
-            else
-              self.new # important for dialogs
-              render :action => 'new'
-            end
-          else
-            if @resources.all?(&:valid?)
-              @resource_id = @resources.detect(&:persisted?).id
-              @resource = nil
-
-              self.insert
-            end
-          end
-        end
+        #def create
+        #  @resources = Video.create_resources(params[:video])
+        #  @resource = @resources.detect { |r| !r.valid? }
+        #
+        #  unless params[:insert]
+        #    if @resources.all?(&:valid?)
+        #      flash.notice = t('created', :scope => 'refinery.crudify', :what => "'#{@resources.map(&:title).join("', '")}'")
+        #      unless from_dialog?
+        #        redirect_to refinery.admin_videos_path
+        #      else
+        #        @dialog_successful = true
+        #        render :nothing => true, :layout => true
+        #      end
+        #    else
+        #      self.new # important for dialogs
+        #      render :action => 'new'
+        #    end
+        #  else
+        #    if @resources.all?(&:valid?)
+        #      @resource_id = @resources.detect(&:persisted?).id
+        #      @resource = nil
+        #
+        #      self.insert
+        #    end
+        #  end
+        #end
 
 
       end

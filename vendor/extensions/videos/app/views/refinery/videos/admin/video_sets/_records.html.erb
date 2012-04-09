@@ -2,8 +2,8 @@
   <h2><%= t('results_for', :scope => 'refinery.admin.search', :query => params[:search]) %></h2>
 <% end %>
 <div class='pagination_container'>
-  <% if @videos.any? %>
-    <%= render 'videos' %>
+  <% if @video_sets.any? %>
+    <%= render 'video_sets' %>
   <% else %>
     <p>
       <% unless searching? %>

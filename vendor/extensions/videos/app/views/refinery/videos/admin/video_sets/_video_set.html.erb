@@ -1,0 +1,21 @@
+<li style="min-height: 35px" class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(video_set) -%>">
+  <span class='title'>
+    <%= video_set.name %>
+
+  </span>
+  <span class='actions'>
+    <%#= link_to refinery_icon_tag('page_white_put.png'),
+                    video_set.url,
+                    :title => t('.download', :size => number_to_human_size(video_set.size)) %>
+    <%= link_to refinery_icon_tag('eye.png'), refinery.videos_admin_video_set_path(video_set, :dialog => true),
+        :title => t('.view_live_html'),
+        :target => "_blank" %>
+    <%= link_to refinery_icon_tag("application_edit.png"), refinery.edit_videos_admin_video_set_path(video_set),
+         :title => t('.edit') %>
+    <%= link_to refinery_icon_tag("delete.png"), refinery.videos_admin_video_set_path(video_set),
+        :class => "cancel confirm-delete",
+        :title => t('.delete'),
+        :confirm => t('message', :scope => 'refinery.admin.delete', :title => video_set.name),
+        :method => :delete %>
+  </span>
+</li>

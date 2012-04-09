@@ -1,0 +1,88 @@
+<%= form_for [refinery, :videos_admin, @video_set] do |f| -%>
+    <%= render '/refinery/admin/error_messages',
+               :object              => @video_set,
+               :include_object_name => true %>
+
+    <div class='field'>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div class='field'>
+      <%= f.label :poster -%>
+      <%= render '/refinery/admin/image_picker',
+                 :f => f,
+                 :field => :poster_id,
+                 :image => @video_set.poster,
+                 :toggle_image_display => false %>
+
+    </div>
+
+    <%= f.fields_for :videos do |v| %>
+        <div class='field'>
+          <% if action_name =~ /(edit)|(update)/ %>
+              <%= link_to t('.download_current'), "video.url",
+                          :title => "video.title" %>
+              <em><%= t('.or') %> </em><%= t('.replace') %>
+              <%= v.file_field :file %>
+          <% else %>
+              <% # we must only hint at multiple when it's a *new* record otherwise update fails.   %>
+              <%= v.file_field :file%>
+          <% end %>
+        </div>
+    <% end %>
+
+    <%= f.fields_for :videos do |v| %>
+        <div class='field'>
+          <% if action_name =~ /(edit)|(update)/ %>
+              <%= link_to t('.download_current'), "video.url",
+                          :title => "video.title" %>
+              <em><%= t('.or') %> </em><%= t('.replace') %>
+              <%= v.file_field :file %>
+          <% else %>
+              <% # we must only hint at multiple when it's a *new* record otherwise update fails.   %>
+              <%= v.file_field :file%>
+          <% end %>
+        </div>
+    <% end %>
+
+
+
+
+    <div class='field' id='maximum_file_size'>
+      <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
+    </div>
+
+    <div>
+      <div class='field'>
+        <%= f.label :width %>
+        <%= f.text_field :width %>
+      </div>
+      <div class='field'>
+        <%= f.label :height %>
+        <%= f.text_field :height %>
+      </div>
+      <div class='field'>
+        <%= f.check_box :autoplay, { }, "true", "false" %>
+        <%= f.label :autoplay, :class => 'input_label' %>
+      </div>
+      <div class='field'>
+        <%= f.check_box :controls, { }, "true", "false" %>
+        <%= f.label :controls, 'Show Controls', :class => 'input_label' %>
+      </div>
+      <div class='field'>
+        <%= f.check_box :preload, { }, "true", "false" %>
+        <%= f.label :preload, 'Preload video', :class => 'input_label' %>
+      </div>
+      <div class='field'>
+        <%= f.check_box :loop, { }, "true", "false" %>
+        <%= f.label :loop, 'Loop Video', :class => 'input_label' %>
+      </div>
+
+    </div>
+
+    <%= render '/refinery/admin/form_actions',
+               :f                   => f,
+               :continue_editing    => false,
+               :delete_title        => t('delete', :scope => 'refinery.videos.admin.videos.video'),
+               :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @video_set.name) %>
+<% end -%>

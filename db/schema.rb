@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406124124) do
+ActiveRecord::Schema.define(:version => 20120409190153) do
 
   create_table "refinery_images", :force => true do |t|
     t.string   "image_mime_type"
@@ -136,6 +136,15 @@ ActiveRecord::Schema.define(:version => 20120406124124) do
 
   add_index "refinery_users", ["id"], :name => "index_refinery_users_on_id"
 
+  create_table "refinery_video_sets", :force => true do |t|
+    t.string   "name"
+    t.string   "config"
+    t.integer  "poster_id"
+    t.integer  "position"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "refinery_videos", :force => true do |t|
     t.string   "file_name"
     t.integer  "file_size"
@@ -146,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20120406124124) do
     t.string   "file_uid"
     t.string   "file_mime_type"
     t.string   "config"
+    t.integer  "video_set_id"
   end
 
   create_table "seo_meta", :force => true do |t|
