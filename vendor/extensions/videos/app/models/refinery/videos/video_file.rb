@@ -3,9 +3,10 @@ require 'dragonfly'
 module Refinery
   module Videos
     class VideoFile < Refinery::Core::BaseModel
+      MIME_TYPES = %w(video/mp4 video/x-flv application/ogg video/webm)
       self.table_name = 'refinery_video_files'
       acts_as_indexed :fields => [:file_name, :file_ext]
-      attr_accessible :file, :position
+      attr_accessible :file, :file_mime_type, :position
       belongs_to :video
 
       ############################ Dragonfly
@@ -21,32 +22,12 @@ module Refinery
       ########################### Validations
       validates :file_name, :presence => true, :uniqueness => true
       validates :file, :presence => true
+      validates :mime_type, :inclusion => { :in => MIME_TYPES,
+                                            :message => "Wrong file mime_type" }
       #######################################
 
       def title
         CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
-      end
-
-      class << self
-        # How many resources per page should be displayed?
-        #def per_page(dialog = false)
-        #  dialog ? Resources.pages_per_dialog : Resources.pages_per_admin_index
-        #end
-
-        def create_resources(params)
-          resources = []
-
-          unless params.present? and params[:file].is_a?(Array)
-            resources << create(params)
-          else
-            params[:file].each do |resource|
-              resources << create(:file => resource)
-            end
-          end
-
-          resources
-        end
-
       end
 
     end

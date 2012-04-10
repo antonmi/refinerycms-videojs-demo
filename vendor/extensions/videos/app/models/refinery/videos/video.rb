@@ -3,8 +3,10 @@ require 'dragonfly'
 module Refinery
   module Videos
     class Video < Refinery::Core::BaseModel
+
       self.table_name = 'refinery_videos'
       acts_as_indexed :fields => [:title]
+
       has_many :video_files,:dependent => :destroy
       accepts_nested_attributes_for :video_files
 
@@ -41,42 +43,31 @@ module Refinery
             data_setup << "\"#{option}\": #{config[option] || '\"auto\"'}"
           end
         end
-        sources = ["<source src='#{self.url}' type='#{self.mime_type}'/>"]
-
-        html = <<EOS
-        <video id="example_video_1" class="video-js vjs-default-skin" width="#{config[:width]}" height="#{config[:height]}" data-setup=' {#{data_setup.join(',')}}'>#{sources.join}</video>
-EOS
+        data_setup << "\"poster\": \"#{poster.url}\"" if poster
+        sources = []
+        video_files.each do |file|
+          sources << ["<source src='#{file.url}' type='#{file.mime_type}'/>"]
+        end
+        html = %Q{<video id="video_#{self.id}" class="video-js vjs-default-skin" width="#{config[:width]}" height="#{config[:height]}" data-setup=' {#{data_setup.join(',')}}'>#{sources.join}</video>}
         html.html_safe
       end
 
-      class << self
-        # How many resources per page should be displayed?
-        #def per_page(dialog = false)
-        #  dialog ? Resources.pages_per_dialog : Resources.pages_per_admin_index
-        #end
-
-        def create_resources(params)
-          add_config!(params)
-          resources = []
-
-          unless params.present? and params[:file].is_a?(Array)
-            resources << create(params)
-          else
-            params[:file].each do |resource|
-              resources << create(:file => resource, :config => params[:config])
-            end
-          end
-
-          resources
-        end
-
-        def add_config!(params)
-          params.merge!(:config => {})
-          CONFIG_OPTIONS.keys.each do |option|
-            params[:config].merge!(option => params[option])
-          end
-        end
+      def mime_types
+        VideoFile::MIME_TYPES
       end
+
+      #############################Automatic build video_files
+      alias_method :old_video_files, :video_files
+
+      def video_files
+        files = old_video_files
+        (self.mime_types - files.map(&:mime_type)).each do |mime_type|
+            files << VideoFile.new(:file_mime_type => mime_type)
+        end
+        files
+      end
+
+      ##############################
 
       private
 

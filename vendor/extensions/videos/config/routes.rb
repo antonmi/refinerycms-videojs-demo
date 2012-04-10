@@ -16,6 +16,7 @@ Refinery::Core::Engine.routes.append do
           get :append_to_wym
         end
       end
+      resources :video_files, :only => [:destroy]
     end
   end
 

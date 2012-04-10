@@ -5,3 +5,11 @@
   <%= render 'actions' %>
 </aside>
 <%= render '/refinery/admin/make_sortable', :tree => false if !searching? and ::Refinery::Videos::Admin::VideosController.sortable? and ::Refinery::Videos::Video.count > 1 %>
+
+<script type="text/javascript">
+  onCloseDialog = function(){
+      if (video_player) {
+          video_player.remove();
+      }
+  }
+</script>

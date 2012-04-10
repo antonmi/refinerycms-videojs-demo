@@ -3,11 +3,11 @@
                :object              => @video,
                :include_object_name => true %>
 
-
     <div class='field'>
       <%= f.label :title %>
       <%= f.text_field :title %>
     </div>
+
     <div class='field'>
       <%= f.label :poster -%>
       <%= render '/refinery/admin/image_picker',
@@ -17,51 +17,65 @@
                  :toggle_image_display => false %>
 
     </div>
-    <div class='field'>
-      <%= f.fields_for :video_files do |v| %>
-          <div class='field'>
-            <% if action_name =~ /(edit)|(update)/ %>
-                <%= link_to t('.download_current'), "video_file.url",
-                            :title => "video_file.title" %>
-                <em><%= t('.or') %> </em><%= t('.replace') %>
-                <%= v.file_field :file %>
-            <% else %>
-                <% # we must only hint at multiple when it's a *new* record otherwise update fails.   %>
-                <%= v.file_field :file%>
-            <% end %>
-          </div>
-      <% end %>
-    </div>
+
+    <label>Files</label>
+    <%= f.fields_for :video_files do |v| %>
+        <% if action_name =~ /(edit)|(update)/ %>
+            <div class='field'>
+              <% if v.object.persisted? %>
+                  <%= link_to(t('.download_current'), v.object.url,
+                              :title => v.object.file_name)  %>
+                  <em><%= t('.or') %> </em><%= t('.replace') %>
+                  <%= v.file_field :file %>
+                  <%= link_to refinery_icon_tag("delete.png"), refinery.videos_admin_video_file_path(v.object),
+                              :class => "cancel confirm-delete",
+                              :title => t('.delete'),
+                              :confirm => t('message', :scope => 'refinery.admin.delete', :title => v.object.title),
+                              :method => :delete %>
+              <% else %>
+                  <label>(<%= v.object.file_mime_type %>)</label>
+                  <%= v.file_field :file %>
+              <% end %>
+            </div>
+        <% else %>
+            <div class='field'>
+              <label>(<%= v.object.file_mime_type %>)</label>
+              <%= v.file_field :file%>
+            </div>
+        <% end %>
+    <% end %>
 
     <div class='field' id='maximum_file_size'>
-      <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
+      <label>
+        <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
+      </label>
     </div>
-    <div>
-      <div class='field'>
-        <%= f.label :width %>
-        <%= f.text_field :width %>
-      </div>
-      <div class='field'>
-        <%= f.label :height %>
-        <%= f.text_field :height %>
-      </div>
-      <div class='field'>
-        <%= f.check_box :autoplay, { }, "true", "false" %>
-        <%= f.label :autoplay, :class => 'input_label' %>
-      </div>
-      <div class='field'>
-        <%= f.check_box :controls, { }, "true", "false" %>
-        <%= f.label :controls, 'Show Controls', :class => 'input_label' %>
-      </div>
-      <div class='field'>
-        <%= f.check_box :preload, { }, "true", "false" %>
-        <%= f.label :preload, 'Preload video', :class => 'input_label' %>
-      </div>
-      <div class='field'>
-        <%= f.check_box :loop, { }, "true", "false" %>
-        <%= f.label :loop, 'Loop Video', :class => 'input_label' %>
-      </div>
 
+
+    <div class='field'>
+      <%= f.label :width %>
+      <%= f.text_field :width %>
+    </div>
+    <div class='field'>
+      <%= f.label :height %>
+      <%= f.text_field :height %>
+    </div>
+    <label>Options</label>
+    <div class='field'>
+      <%= f.check_box :autoplay, { }, "true", "false" %>
+      <%= f.label :autoplay, :class => 'input_label' %>
+    </div>
+    <div class='field'>
+      <%= f.check_box :controls, { }, "true", "false" %>
+      <%= f.label :controls, 'Show Controls', :class => 'input_label' %>
+    </div>
+    <div class='field'>
+      <%= f.check_box :preload, { }, "true", "false" %>
+      <%= f.label :preload, 'Preload video', :class => 'input_label' %>
+    </div>
+    <div class='field'>
+      <%= f.check_box :loop, { }, "true", "false" %>
+      <%= f.label :loop, 'Loop Video', :class => 'input_label' %>
     </div>
 
     <%= render '/refinery/admin/form_actions',
