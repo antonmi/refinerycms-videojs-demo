@@ -8,7 +8,7 @@ module Refinery
         def setup!
           app_videos = ::Dragonfly[:refinery_videos]
 
-          app_videos.define_macro(::Refinery::Videos::Video, :video_accessor)
+          app_videos.define_macro(::Refinery::Videos::VideoFile, :video_accessor)
 
           app_videos.analyser.register(::Dragonfly::Analysis::FileCommandAnalyser)
           app_videos.content_disposition = :attachment

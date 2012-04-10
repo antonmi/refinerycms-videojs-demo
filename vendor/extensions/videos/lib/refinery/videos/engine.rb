@@ -18,9 +18,9 @@ module Refinery
           plugin.pathname = root
           plugin.activity = {
             :class_name => :'refinery/videos/video',
-            :title => 'file_name'
+            :title => 'title'
           }
-          
+
         end
       end
 

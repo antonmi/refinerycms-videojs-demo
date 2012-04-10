@@ -108,7 +108,6 @@ GEM
     paper_trail (2.6.3)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    pg (0.13.2)
     polyglot (0.3.3)
     pry (0.9.8.4)
       coderay (~> 1.0.5)
@@ -226,7 +225,6 @@ DEPENDENCIES
   fog
   heroku
   jquery-rails
-  pg
   pry-rails
   rails (= 3.2.3)
   refinerycms (~> 2.0.0)

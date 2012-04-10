@@ -4,7 +4,8 @@ module Refinery
   module Videos
     class Video < Refinery::Core::BaseModel
       self.table_name = 'refinery_videos'
-      acts_as_indexed :fields => [:file_name, :file_ext]
+      acts_as_indexed :fields => [:file_name]
+      has_many :video_files
 
       ################## Video config options
       serialize :config, Hash
@@ -13,7 +14,7 @@ module Refinery
           :controls => "true", :preload => "true",
           :poster => "false", :loop => "false"
       }
-      attr_accessible :file, :config, *CONFIG_OPTIONS.keys
+      attr_accessible :video_file, :config, *CONFIG_OPTIONS.keys
 
       # Create getters and setters
       CONFIG_OPTIONS.keys.each do |option|
@@ -26,29 +27,9 @@ module Refinery
       end
       #######################################
 
-      ############################ Dragonfly
-      ::Refinery::Videos::Dragonfly.setup!
-      video_accessor :file
-
-      delegate :ext, :size, :mime_type, :url,
-               :to        => :file,
-               :allow_nil => true
-
-      #######################################
-
-      ########################### Validations
-      validates :file_name, :presence => true, :uniqueness => true
-      validates :file, :presence => true
-      #######################################
-
       ########################### Callbacks
       after_initialize :set_default_config
       #####################################
-
-
-      def title
-        CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
-      end
 
       def to_html
         data_setup = []
