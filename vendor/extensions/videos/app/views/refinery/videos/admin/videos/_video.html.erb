@@ -1,10 +1,10 @@
 <li class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(video) -%>">
   <span class='title'>
-    <%= video.file_name %>
+    <%= video.title %>
 
   </span>
   <span class='actions'>
-    <%= link_to refinery_icon_tag('page_white_put.png'),
+    <%#= link_to refinery_icon_tag('page_white_put.png'),
                     video.url,
                     :title => t('.download', :size => number_to_human_size(video.size)) %>
     <%= link_to refinery_icon_tag('eye.png'), refinery.videos_admin_video_path(video, :dialog => true),
@@ -15,7 +15,7 @@
     <%= link_to refinery_icon_tag("delete.png"), refinery.videos_admin_video_path(video),
         :class => "cancel confirm-delete",
         :title => t('.delete'),
-        :confirm => t('message', :scope => 'refinery.admin.delete', :title => video.file_name),
+        :confirm => t('message', :scope => 'refinery.admin.delete', :title => video.title),
         :method => :delete %>
   </span>
 </li>

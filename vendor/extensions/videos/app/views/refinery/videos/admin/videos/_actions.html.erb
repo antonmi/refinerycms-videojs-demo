@@ -5,7 +5,7 @@
     </li>
   <% end %>
   <li>
-    <%= link_to t('.create_new'), refinery.new_videos_admin_video_path(:dialog => true),
+    <%= link_to t('.create_new'), refinery.new_videos_admin_video_path,
                  :class => "add_icon" %>
   </li>
 <% if !searching? && ::Refinery::Videos::Admin::VideosController.sortable? && ::Refinery::Videos::Video.any? %>

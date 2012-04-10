@@ -5,21 +5,37 @@
 
 
     <div class='field'>
-      <% if action_name =~ /(edit)|(update)/ %>
-          <%= link_to t('.download_current'), @video.url,
-                      :title => @video.title %>
-          <em><%= t('.or') %> </em><%= t('.replace') %>
-          <%= f.file_field :file %>
-      <% else %>
-          <% # we must only hint at multiple when it's a *new* record otherwise update fails.   %>
-          <%= f.file_field :file, :multiple => (true unless @video.persisted?) %>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+    <div class='field'>
+      <%= f.label :poster -%>
+      <%= render '/refinery/admin/image_picker',
+                 :f => f,
+                 :field => :poster_id,
+                 :image => @video.poster,
+                 :toggle_image_display => false %>
+
+    </div>
+    <div class='field'>
+      <%= f.fields_for :video_files do |v| %>
+          <div class='field'>
+            <% if action_name =~ /(edit)|(update)/ %>
+                <%= link_to t('.download_current'), "video_file.url",
+                            :title => "video_file.title" %>
+                <em><%= t('.or') %> </em><%= t('.replace') %>
+                <%= v.file_field :file %>
+            <% else %>
+                <% # we must only hint at multiple when it's a *new* record otherwise update fails.   %>
+                <%= v.file_field :file%>
+            <% end %>
+          </div>
       <% end %>
     </div>
 
     <div class='field' id='maximum_file_size'>
       <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
     </div>
-
     <div>
       <div class='field'>
         <%= f.label :width %>
@@ -52,5 +68,5 @@
                :f                   => f,
                :continue_editing    => false,
                :delete_title        => t('delete', :scope => 'refinery.videos.admin.videos.video'),
-               :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @video.file_name) %>
+               :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @video.title) %>
 <% end -%>

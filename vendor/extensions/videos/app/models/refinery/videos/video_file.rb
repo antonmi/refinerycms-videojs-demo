@@ -5,7 +5,7 @@ module Refinery
     class VideoFile < Refinery::Core::BaseModel
       self.table_name = 'refinery_video_files'
       acts_as_indexed :fields => [:file_name, :file_ext]
-      attr_accessible :file
+      attr_accessible :file, :position
       belongs_to :video
 
       ############################ Dragonfly

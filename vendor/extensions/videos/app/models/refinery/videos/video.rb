@@ -4,17 +4,20 @@ module Refinery
   module Videos
     class Video < Refinery::Core::BaseModel
       self.table_name = 'refinery_videos'
-      acts_as_indexed :fields => [:file_name]
-      has_many :video_files
+      acts_as_indexed :fields => [:title]
+      has_many :video_files,:dependent => :destroy
+      accepts_nested_attributes_for :video_files
+
+      belongs_to :poster, :class_name => '::Refinery::Image'
+      accepts_nested_attributes_for :poster
 
       ################## Video config options
       serialize :config, Hash
       CONFIG_OPTIONS = {
           :autoplay => "false", :width => "400", :height => "300",
-          :controls => "true", :preload => "true",
-          :poster => "false", :loop => "false"
+          :controls => "true", :preload => "true", :loop => "true"
       }
-      attr_accessible :video_file, :config, *CONFIG_OPTIONS.keys
+      attr_accessible :title, :poster_id, :video_files_attributes, :position, :config, *CONFIG_OPTIONS.keys
 
       # Create getters and setters
       CONFIG_OPTIONS.keys.each do |option|
