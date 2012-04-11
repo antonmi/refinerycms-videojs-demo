@@ -52,31 +52,16 @@ module Refinery
         html.html_safe
       end
 
-      def mime_types
-        VideoFile::MIME_TYPES
-      end
-
-      #############################Automatic build video_files
-      alias_method :old_video_files, :video_files
-
-      def video_files
-        files = old_video_files
-        (self.mime_types - files.map(&:mime_type)).each do |mime_type|
-            files << VideoFile.new(:file_mime_type => mime_type)
-        end
-        files
-      end
-
-      ##############################
 
       private
 
       def set_default_config
         CONFIG_OPTIONS.each do |option, value|
-           self.send("#{option}=", value)
+          self.send("#{option}=", value)
         end if new_record?
       end
 
     end
+
   end
 end

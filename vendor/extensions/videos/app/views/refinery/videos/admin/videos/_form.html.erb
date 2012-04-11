@@ -18,39 +18,7 @@
 
     </div>
 
-    <label>Files</label>
-    <%= f.fields_for :video_files do |v| %>
-        <% if action_name =~ /(edit)|(update)/ %>
-            <div class='field'>
-              <% if v.object.persisted? %>
-                  <%= link_to(t('.download_current'), v.object.url,
-                              :title => v.object.file_name)  %>
-                  <em><%= t('.or') %> </em><%= t('.replace') %>
-                  <%= v.file_field :file %>
-                  <%= link_to refinery_icon_tag("delete.png"), refinery.videos_admin_video_file_path(v.object),
-                              :class => "cancel confirm-delete",
-                              :title => t('.delete'),
-                              :confirm => t('message', :scope => 'refinery.admin.delete', :title => v.object.title),
-                              :method => :delete %>
-              <% else %>
-                  <label>(<%= v.object.file_mime_type %>)</label>
-                  <%= v.file_field :file %>
-              <% end %>
-            </div>
-        <% else %>
-            <div class='field'>
-              <label>(<%= v.object.file_mime_type %>)</label>
-              <%= v.file_field :file%>
-            </div>
-        <% end %>
-    <% end %>
-
-    <div class='field' id='maximum_file_size'>
-      <label>
-        <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
-      </label>
-    </div>
-
+    <%= render 'file_fields', :f => f %>
 
     <div class='field'>
       <%= f.label :width %>

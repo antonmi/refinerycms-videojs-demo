@@ -6,6 +6,7 @@ module Refinery
         crudify :'refinery/videos/video',
                 :title_attribute => 'title', :xhr_paging => true
 
+        before_filter :set_mime_types, :only => [:new, :edit]
 
         def show
           @video = Video.find(params[:id])
@@ -22,6 +23,10 @@ module Refinery
         def append_to_wym
           @video = Video.find(params[:id])
           @html_for_wym = @video.to_html
+        end
+
+        def set_mime_types
+          @mime_types = Refinery::Videos.config[:whitelisted_mime_types]
         end
 
       end
