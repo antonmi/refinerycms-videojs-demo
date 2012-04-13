@@ -8,6 +8,7 @@ module Refinery
       acts_as_indexed :fields => [:title]
 
       validates :title, :presence => true
+      validate :one_source
 
       has_many :video_files,:dependent => :destroy
       accepts_nested_attributes_for :video_files
@@ -36,6 +37,7 @@ module Refinery
 
       ########################### Callbacks
       after_initialize :set_default_config
+      after_update :build_video_files
       #####################################
 
       def to_html
@@ -48,15 +50,20 @@ module Refinery
         data_setup << "\"poster\": \"#{poster.url}\"" if poster
         sources = []
         video_files.each do |file|
-          sources << ["<source src='#{file.url}' type='#{file.mime_type}'/>"]
+          if file.use_external
+            sources << ["<source src='#{file.external_url}' type='#{file.file_mime_type}'/>"]
+          else
+            sources << ["<source src='#{file.url}' type='#{file.file_mime_type}'/>"]
+          end if file.exist?
         end
         html = %Q{<video id="video_#{self.id}" class="video-js vjs-default-skin" width="#{config[:width]}" height="#{config[:height]}" data-setup=' {#{data_setup.join(',')}}'>#{sources.join}</video>}
+
         html.html_safe
       end
 
       def build_video_files
-        if new_record?
-          Refinery::Videos.config[:whitelisted_mime_types].each do |type|
+        Refinery::Videos.config[:whitelisted_mime_types].each do |type|
+          unless video_files.map(&:file_mime_type).include?(type)
             video_file = VideoFile.new(:file_mime_type => type)
             self.video_files << video_file
           end
@@ -71,7 +78,11 @@ module Refinery
         end if new_record?
       end
 
-
+      def one_source
+        if video_files.map(&:file).join.empty? && video_files.map(&:external_url).join.empty?
+          errors.add(:video_files, "At least one source should present")
+        end
+      end
 
     end
 

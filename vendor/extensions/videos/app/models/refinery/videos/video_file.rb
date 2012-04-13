@@ -31,6 +31,9 @@ module Refinery
         CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
       end
 
+      def exist?
+        use_external ? external_url.present? : file.present?
+      end
 
     end
   end

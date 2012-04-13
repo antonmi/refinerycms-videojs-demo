@@ -9,7 +9,7 @@
 <script type="text/javascript">
   onCloseDialog = function(){
       if (video_player) {
-          video_player.remove();
+          $('iframe#dialog_iframe').attr('src', '');
       }
   }
 </script>

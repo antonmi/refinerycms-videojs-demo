@@ -1,11 +1,11 @@
-<!--<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">-->
+<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
 <script src="http://vjs.zencdn.net/c/video.js"></script>
 
 <%= @video.to_html %>
 
 <script type="text/javascript">
     $(function(){
-        parent.window.video_player = $('video.video-js');
+        parent.window.video_player = $('.video-js');
     });
 </script>
 

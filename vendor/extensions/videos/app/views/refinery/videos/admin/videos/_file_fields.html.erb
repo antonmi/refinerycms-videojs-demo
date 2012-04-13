@@ -1,40 +1,39 @@
-<% @video.build_video_files unless @video.video_files.present? %>
 <label>Files</label>
 <%= f.fields_for :video_files do |v| %>
     <%= v.hidden_field :file_mime_type %>
     <div class="parent">
       <label>(<%= v.object.file_mime_type %>)</label>
-        <span>
-          <%= v.radio_button :use_external, false, {:class => "use_file"}.merge(v.object.use_external ? {} : {:checked => true}) %>
-          <%= v.label :use_external, 'Use file', :class => 'stripped' %>
-        </span>
-        <span>
-          <%= v.radio_button :use_external, true, {:class => "use_external"}.merge(v.object.use_external ? {:checked => true} : {}) %>
-          <%= v.label :use_external, 'Use external source', :class => 'stripped' %>
-        </span>
+      <label class="inline">
+        <%= v.radio_button :use_external, false, {:class => "use_file"}.merge(v.object.use_external ? {} : {:checked => true}) %>
+        <span>Use file</span>
+      </label>
+      <label class="inline">
+        <%= v.radio_button :use_external, true, {:class => "use_external"}.merge(v.object.use_external ? {:checked => true} : {}) %>
+        <span>Use external source</span>
+      </label>
 
       <div class='field'>
-        <% binding.pry %>
-        <% if v.object.file.present? %>
-            <div class="use_file" style='display: none;'>
-              <span>Add File</span>
-              <%= v.file_field :file%>
-            </div>
-        <% else %>
-            <div class="use_file">
-              <%= link_to(t('.download_current'), v.object.url,
-                          :title => v.object.file_name)  %>
-              <em><%= t('.or') %> </em><%= t('.replace') %>
-
+        <div class="use_file" <%= "style='display: none;'" if v.object.use_external %>>
+          <% if v.object.file.present? %>
+              <% if v.object.url %>
+                  <%= link_to(t('.download_current'), v.object.url,
+                              :title => v.object.file_name) %>
+                  <em><%= t('.or') %> </em><%= t('.replace') %>
+              <% else %>
+                  <span><%= v.object.file_name  %></span>
+              <% end %>
 
               <%= v.file_field :file %>
-              <%= link_to refinery_icon_tag("delete.png"), refinery.videos_admin_video_file_path(v.object),
+              <%= link_to(refinery_icon_tag("delete.png"), refinery.videos_admin_video_file_path(v.object),
                           :class => "cancel confirm-delete",
                           :title => t('.delete'),
                           :confirm => t('message', :scope => 'refinery.admin.delete', :title => v.object.file_name),
-                          :method => :delete %>
-            </div>
-        <% end %>
+                          :method => :delete) if v.object.url %>
+          <% else %>
+              <span>Add File</span>
+              <%= v.file_field :file%>
+          <% end %>
+        </div>
         <div class="use_external" <%= "style='display: none;'" unless v.object.use_external %>>
           <span>Link to source</span>
           <%= v.text_field :external_url %>

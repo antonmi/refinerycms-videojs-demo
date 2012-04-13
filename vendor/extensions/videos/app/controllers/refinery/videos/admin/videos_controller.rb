@@ -14,6 +14,7 @@ module Refinery
 
         def new
           @video = Video.new
+          @video.build_video_files unless @video.video_files.present?
         end
 
         def insert
