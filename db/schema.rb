@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120410164534) do
+ActiveRecord::Schema.define(:version => 20120412200635) do
 
   create_table "refinery_images", :force => true do |t|
     t.string   "image_mime_type"
@@ -146,6 +146,8 @@ ActiveRecord::Schema.define(:version => 20120410164534) do
     t.integer  "video_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "external_url"
+    t.boolean  "use_external"
   end
 
   create_table "refinery_videos", :force => true do |t|

@@ -6,7 +6,7 @@ module Refinery
 
       self.table_name = 'refinery_video_files'
       acts_as_indexed :fields => [:file_name, :file_ext]
-      attr_accessible :file, :file_mime_type, :position
+      attr_accessible :file, :file_mime_type, :position, :use_external, :external_url
       belongs_to :video
 
       ############################ Dragonfly
@@ -20,10 +20,11 @@ module Refinery
       #######################################
 
       ########################### Validations
-      validates :file_name, :presence => true, :uniqueness => true
-      validates :file, :presence => true
+      #validates :file, :presence => true, :unless => :use_external
+      #validates :file_name, :presence => true, :unless => :use_external
       validates :mime_type, :inclusion => { :in =>  Refinery::Videos.config[:whitelisted_mime_types],
-                                            :message => "Wrong file mime_type" }
+                                            :message => "Wrong file mime_type" }, :if => :file_name?
+      validates :external_url, :presence => true, :if => :use_external?
       #######################################
 
       def title

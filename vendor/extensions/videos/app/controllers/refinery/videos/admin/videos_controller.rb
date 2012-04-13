@@ -6,7 +6,7 @@ module Refinery
         crudify :'refinery/videos/video',
                 :title_attribute => 'title', :xhr_paging => true
 
-        before_filter :set_mime_types, :only => [:new, :edit, :create]
+        before_filter :set_mime_types, :only => [:new, :edit, :create, :update]
 
         def show
           @video = Video.find(params[:id])

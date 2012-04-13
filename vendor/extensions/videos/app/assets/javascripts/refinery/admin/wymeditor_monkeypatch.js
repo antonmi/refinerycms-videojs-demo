@@ -6,3 +6,4 @@ window.onload = function ()
         init_modal_dialogs();
     }
 };
+

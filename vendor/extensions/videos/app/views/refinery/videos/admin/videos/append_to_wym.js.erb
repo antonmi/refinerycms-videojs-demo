@@ -1,3 +1,6 @@
+parent.$('body').append('<script src="http://vjs.zencdn.net/c/video.js"></script>');
+parent.$('body').append('<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">');
 wym = parent.$.wymeditors(0);
 wym.html(wym.html() + '<%= escape_javascript(@html_for_wym) %>');
+
 close_dialog();

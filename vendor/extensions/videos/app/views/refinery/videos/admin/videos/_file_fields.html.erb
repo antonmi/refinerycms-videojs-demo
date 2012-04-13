@@ -1,47 +1,64 @@
 <label>Files</label>
+<%= f.fields_for :video_files do |v| %>
+    <div class="parent">
+      <label>(<%= v.object.file_mime_type %>)</label>
+        <span>
+          <%= v.radio_button :use_external, false, {:class => "use_file"}.merge(v.object.use_external ? {} : {:checked => true}) %>
+          <%= v.label :use_external, 'Use file', :class => 'stripped' %>
+        </span>
+        <span>
+          <%= v.radio_button :use_external, true, {:class => "use_external"}.merge(v.object.use_external ? {:checked => true} : {}) %>
+          <%= v.label :use_external, 'Use external source', :class => 'stripped' %>
+        </span>
+      <% binding.pry %>
 
-<% if action_name =~ /(edit)|(update)/ %>
-
-    <%= f.fields_for :video_files do |v| %>
-        <div class='field'>
-          <label>(<%= v.object.mime_type %>)</label>
-          <%= link_to(t('.download_current'), v.object.url,
-                      :title => v.object.file_name)  %>
-          <em><%= t('.or') %> </em><%= t('.replace') %>
-          <%= v.file_field :file %>
-          <%= link_to refinery_icon_tag("delete.png"), refinery.videos_admin_video_file_path(v.object),
-                      :class => "cancel confirm-delete",
-                      :title => t('.delete'),
-                      :confirm => t('message', :scope => 'refinery.admin.delete', :title => v.object.file_name),
-                      :method => :delete %>
-        </div>
-    <% end %>
-
-    <% (@mime_types - @video.video_files.map(&:file_mime_type)).each_with_index do |mime_type, index| %>
-        <div class='field'>
-          <label>(<%= mime_type %>)</label>
-          <% number = @video.video_files.count - index + 1 %>
-          <input id="video_video_files_attributes_<%= number %>_file" name="video[video_files_attributes][<%= number %>][file]" type="file">
-        </div>
-    <% end %>
-
-<% else %>
-
-    <% @video.video_files.build %>
-    <% @mime_types.each do |mime_type| %>
-        <%= f.fields_for :video_files do |v| %>
-            <div class='field'>
-              <label>(<%= mime_type %>)</label>
+      <div class='field'>
+        <%# binding.pry %>
+        <% unless v.object.file.present? %>
+            <div class="use_file" style='display: none;'>
+              <span>Add File</span>
               <%= v.file_field :file%>
             </div>
+        <% else %>
+            <div class="use_file">
+              <%= link_to(t('.download_current'), v.object.url,
+                          :title => v.object.file_name)  %>
+              <em><%= t('.or') %> </em><%= t('.replace') %>
+
+
+              <%= v.file_field :file %>
+              <%= link_to refinery_icon_tag("delete.png"), refinery.videos_admin_video_file_path(v.object),
+                          :class => "cancel confirm-delete",
+                          :title => t('.delete'),
+                          :confirm => t('message', :scope => 'refinery.admin.delete', :title => v.object.file_name),
+                          :method => :delete %>
+            </div>
         <% end %>
-    <% end  %>
-
+        <div class="use_external" <%= "style='display: none;'" unless v.object.use_external %>>
+          <span>Link to source</span>
+          <%= v.text_field :external_url %>
+        </div>
+      </div>
+    </div>
 <% end %>
-
 
 <div class='field' id='maximum_file_size'>
   <label>
     <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
   </label>
 </div>
+
+<script type="text/javascript">
+    $('input.use_external').on('change', function(){
+        if ($(this).is(':checked')) {
+            $(this).parents('div.parent').find('div.use_external').show();
+            $(this).parents('div.parent').find('div.use_file').hide();
+        }
+    })
+    $('input.use_file').on('change', function(){
+        if ($(this).is(':checked')) {
+            $(this).parents('div.parent').find('div.use_external').hide();
+            $(this).parents('div.parent').find('div.use_file').show();
+        }
+    })
+</script>

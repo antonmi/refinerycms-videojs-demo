@@ -1,0 +1,23 @@
+<%= f.fields_for :video_files, @video.video_files[index] do |v| %>
+    <div class="parent">
+      <label>(<%= mime_type %>)</label>
+              <span>
+          <%= v.radio_button :use_external, false, {:class => "use_file"}.merge(v.object.use_external ? {} : {:checked => true}) %>
+                <%= v.label :use_external, 'Use file', :class => 'stripped' %>
+        </span>
+        <span>
+          <%= v.radio_button :use_external, true, {:class => "use_external"}.merge(v.object.use_external ? {:checked => true} : {}) %>
+          <%= v.label :use_external, 'Use external source', :class => 'stripped' %>
+        </span>
+      <div class='field'>
+        <div class="use_file" <%= "style='display: none;'" if v.object.use_external %>>
+          <span>Add File</span>
+          <%= v.file_field :file%>
+        </div>
+        <div class="use_external" <%= "style='display: none;'" unless v.object.use_external %>>
+          <span>Link to source</span>
+          <%= v.text_field :external_url %>
+        </div>
+      </div>
+    </div>
+<% end %>
