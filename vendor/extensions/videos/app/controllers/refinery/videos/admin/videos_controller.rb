@@ -29,6 +29,7 @@ module Refinery
           @mime_types = Refinery::Videos.config[:whitelisted_mime_types]
         end
 
+
       end
     end
   end

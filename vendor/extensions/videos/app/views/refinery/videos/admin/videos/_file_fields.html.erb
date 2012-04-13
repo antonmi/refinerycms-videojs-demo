@@ -1,5 +1,7 @@
+<% @video.build_video_files unless @video.video_files.present? %>
 <label>Files</label>
 <%= f.fields_for :video_files do |v| %>
+    <%= v.hidden_field :file_mime_type %>
     <div class="parent">
       <label>(<%= v.object.file_mime_type %>)</label>
         <span>
@@ -10,11 +12,10 @@
           <%= v.radio_button :use_external, true, {:class => "use_external"}.merge(v.object.use_external ? {:checked => true} : {}) %>
           <%= v.label :use_external, 'Use external source', :class => 'stripped' %>
         </span>
-      <% binding.pry %>
 
       <div class='field'>
-        <%# binding.pry %>
-        <% unless v.object.file.present? %>
+        <% binding.pry %>
+        <% if v.object.file.present? %>
             <div class="use_file" style='display: none;'>
               <span>Add File</span>
               <%= v.file_field :file%>

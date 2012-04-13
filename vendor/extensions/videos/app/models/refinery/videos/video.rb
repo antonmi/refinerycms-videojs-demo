@@ -36,7 +36,6 @@ module Refinery
 
       ########################### Callbacks
       after_initialize :set_default_config
-      after_initialize :init_video_files
       #####################################
 
       def to_html
@@ -55,6 +54,14 @@ module Refinery
         html.html_safe
       end
 
+      def build_video_files
+        if new_record?
+          Refinery::Videos.config[:whitelisted_mime_types].each do |type|
+            video_file = VideoFile.new(:file_mime_type => type)
+            self.video_files << video_file
+          end
+        end
+      end
 
       private
 
@@ -64,14 +71,7 @@ module Refinery
         end if new_record?
       end
 
-      def init_video_files
-        if new_record?
-          Refinery::Videos.config[:whitelisted_mime_types].each do |type|
-            video_file = VideoFile.new(:file_mime_type => type)
-            self.video_files << video_file
-          end
-        end
-      end
+
 
     end
 
