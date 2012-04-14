@@ -8,7 +8,6 @@ module Refinery
       acts_as_indexed :fields => [:title]
 
       validates :title, :presence => true
-      validate :one_source
 
       has_many :video_files,:dependent => :destroy
       accepts_nested_attributes_for :video_files
@@ -37,7 +36,6 @@ module Refinery
 
       ########################### Callbacks
       after_initialize :set_default_config
-      after_update :build_video_files
       #####################################
 
       def to_html
@@ -61,27 +59,12 @@ module Refinery
         html.html_safe
       end
 
-      def build_video_files
-        Refinery::Videos.config[:whitelisted_mime_types].each do |type|
-          unless video_files.map(&:file_mime_type).include?(type)
-            video_file = VideoFile.new(:file_mime_type => type)
-            self.video_files << video_file
-          end
-        end
-      end
-
       private
 
       def set_default_config
         CONFIG_OPTIONS.each do |option, value|
           self.send("#{option}=", value)
         end if new_record?
-      end
-
-      def one_source
-        if video_files.map(&:file).join.empty? && video_files.map(&:external_url).join.empty?
-          errors.add(:video_files, "At least one source should present")
-        end
       end
 
     end

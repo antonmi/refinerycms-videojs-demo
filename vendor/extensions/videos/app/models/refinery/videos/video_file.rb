@@ -20,7 +20,7 @@ module Refinery
       #######################################
 
       ########################### Validations
-      #validates :file, :presence => true, :unless => :use_external
+      validates :file, :presence => true, :unless => :use_external?
       #validates :file_name, :presence => true, :unless => :use_external
       validates :mime_type, :inclusion => { :in =>  Refinery::Videos.config[:whitelisted_mime_types],
                                             :message => "Wrong file mime_type" }, :if => :file_name?
