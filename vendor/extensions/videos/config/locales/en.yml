@@ -1,5 +1,9 @@
 en:
   refinery:
+    admin:
+      dashboard:
+        additional_dashboard_menu_items:
+          create_new: Add New Video
     plugins:
       videos:
         title: Videos

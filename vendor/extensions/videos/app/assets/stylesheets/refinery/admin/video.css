@@ -1,3 +1,5 @@
+#add_video { padding-top: 3px; padding-left: 10px}
+#add_video li a{ height: 20px; background-image: url('/assets/refinery/admin/add_video_icon.png'); background-repeat: no-repeat; padding-left: 20px;}
 label.inline{ display: inline-block; margin-bottom: 10px; margin-top: 0}
 div.inline{ display: inline-block; vertical-align: top; margin: 1px 10px 0 0; padding-left: 5px}
 div.parent{ margin-bottom: 20px}
