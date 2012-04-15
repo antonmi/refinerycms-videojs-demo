@@ -4,6 +4,7 @@ label.inline{ display: inline-block; margin-bottom: 10px; margin-top: 0}
 div.inline{ display: inline-block; vertical-align: top; margin: 1px 10px 0 0; padding-left: 5px}
 div.parent{ margin-bottom: 20px}
 div.video_container{margin: 10px;}
+div.tips{margin: 10px 0 10px 0; font-style: italic;}
 a.select_video_type{font-size: 12px; font-weight: bold; margin: 10px 10px 10px 0}
 textarea.embed_tag{height: 100px}
 span.short_info{color: grey}
