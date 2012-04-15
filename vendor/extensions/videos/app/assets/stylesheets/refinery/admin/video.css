@@ -9,9 +9,10 @@ a.select_video_type{font-size: 12px; font-weight: bold; margin: 10px 10px 10px 0
 textarea.embed_tag{height: 100px}
 span.short_info{color: grey}
 div.add_remove_buttons{margin-top: 10px}
-div#dialog_list{width: 60%; float: left;}
+div#dialog_list{width: 60%; float: left; min-height: 300px}
 div#dialog_list li.selected{border: 4px solid #22A7F2}
 div#dialog_preview{width:35%; float: right}
+div#dialog_preview iframe{border: 0}
 div#preview_form{width:35%; float: right}
 div#preview_form div.dimensions{width:50%; float:left;}
 div#preview_form div.dimensions input {width:70%;}
