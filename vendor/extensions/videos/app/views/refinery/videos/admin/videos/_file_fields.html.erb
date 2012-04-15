@@ -24,7 +24,7 @@
                 <%= v.file_field :file %>
             <% else %>
                 <span>Add File</span>
-                <%= v.file_field :file, :required => true %>
+                <%= v.file_field :file, {}.merge(v.object.use_external ? {} : {:required => true}) %>
             <% end %>
           </div>
           <div class="use_external" <%= "style='display: none;'" unless v.object.use_external %>>
@@ -32,23 +32,27 @@
             <%= v.text_field :external_url, {}.merge(v.object.use_external ? {:required => true} : {}) %>
           </div>
         </div>
-        <a href='#' onclick="add_field($(this)); return false" class="add_field" style='display: none'><%= refinery_icon_tag("add.png") %>
-          <div class="inline">Add source</div>
-        </a>
-        <% if f.object.persisted? %>
-            <%= link_to(refinery.videos_admin_video_file_path(v.object),
-                        :class => "cancel confirm-delete",
-                        :title => t('.delete'),
-                        :confirm => t('message', :scope => 'refinery.admin.delete', :title => 'file'),
-                        :method => :delete) do %>
-                <div class="inline">Delete source</div>
-                <%= refinery_icon_tag("delete.png") %>
-            <% end %>
-        <% else %>
-            <a href='#' onclick="remove_field($(this)); return false" class="remove_field" style='display: none'><%= refinery_icon_tag("delete.png")%>
-              <div class="inline">Delete source</div>
-            </a>
-        <% end %>
+        <div class='add_remove_buttons'>
+          <a href='#' onclick="add_field($(this)); return false" class="add_field" style='display: none'><%= refinery_icon_tag("add.png") %>
+            <div class="inline">Add source</div>
+          </a>
+          <% if f.object.video_files.count > 1 %>
+              <% if f.object.persisted? %>
+                  <%= link_to(refinery.videos_admin_video_file_path(v.object),
+                              :class => "cancel confirm-delete",
+                              :title => t('.delete'),
+                              :confirm => t('message', :scope => 'refinery.admin.delete', :title => 'file'),
+                              :method => :delete) do %>
+                      <div class="inline">Delete source</div>
+                      <%= refinery_icon_tag("delete.png") %>
+                  <% end %>
+              <% else %>
+                  <a href='#' onclick="remove_field($(this)); return false" class="remove_field" style='display: none'><%= refinery_icon_tag("delete.png")%>
+                    <div class="inline">Delete source</div>
+                  </a>
+              <% end %>
+          <% end  %>
+        </div>
       </div>
 
   <% end %>

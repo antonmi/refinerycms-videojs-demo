@@ -64,6 +64,21 @@ module Refinery
         html.html_safe
       end
 
+
+      def index_short_info
+        return "Shared Source" if use_shared
+        info = []
+        video_files.each do |file|
+          if file.use_external
+            info << "Link: #{file.external_url.scan(/\.(.+$)/).flatten.first}"
+          else
+            info << "File: #{file.mime_type.split('/').last}"
+          end
+        end
+
+        info.join(' | ')
+      end
+
       private
 
       def set_default_config

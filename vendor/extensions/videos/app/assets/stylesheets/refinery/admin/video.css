@@ -4,3 +4,5 @@ div.parent{ margin-bottom: 20px}
 div.video_container{margin: 10px;}
 a.select_video_type{font-size: 12px; font-weight: bold; margin: 10px 10px 10px 0}
 textarea.embed_tag{height: 100px}
+span.short_info{color: grey}
+div.add_remove_buttons{margin-top: 10px}

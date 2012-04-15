@@ -18,12 +18,14 @@
           <%= v.text_field :external_url, :id => "new_external_url_field" %>
         </div>
       </div>
-      <a href='#' onclick="add_field($(this)); return false" class="add_field"><%= refinery_icon_tag("add.png") %>
-        <div class="inline">Add source</div>
-      </a>
-      <a href='#' onclick="remove_field($(this)); return false" class="remove_field"><%= refinery_icon_tag("delete.png")%>
-        <div class="inline">Delete source</div>
-      </a>
+      <div class='add_remove_buttons'>
+        <a href='#' onclick="add_field($(this)); return false" class="add_field"><%= refinery_icon_tag("add.png") %>
+          <div class="inline">Add source</div>
+        </a>
+        <a href='#' onclick="remove_field($(this)); return false" class="remove_field"><%= refinery_icon_tag("delete.png")%>
+          <div class="inline">Delete source</div>
+        </a>
+      </div>
     </div>
 <% end %>
 

@@ -1,7 +1,7 @@
 <li style="min-height: 35px" class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(video) -%>">
   <span class='title'>
     <%= video.title %>
-
+    <span class='short_info'>(<%= video.index_short_info %>)</span>
   </span>
   <span class='actions'>
     <%#= link_to refinery_icon_tag('page_white_put.png'),
