@@ -4,7 +4,10 @@ module Refinery
       class VideosController < ::Refinery::AdminController
 
         crudify :'refinery/videos/video',
-                :title_attribute => 'title', :xhr_paging => true
+                :title_attribute => 'title',
+                :xhr_paging => true,
+                :order => "position ASC",
+                :sortable => true
 
         before_filter :set_mime_types, :only => [:new, :edit, :create, :update]
 
@@ -15,6 +18,7 @@ module Refinery
         def new
           @video = Video.new
           @video.video_files.build
+          @embedded = true if params[:embedded]
         end
 
         def insert
@@ -29,7 +33,6 @@ module Refinery
         def set_mime_types
           @mime_types = Refinery::Videos.config[:whitelisted_mime_types]
         end
-
 
       end
     end

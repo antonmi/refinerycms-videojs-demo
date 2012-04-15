@@ -1,3 +1,6 @@
 label.inline{ display: inline-block; margin-bottom: 10px; margin-top: 0}
 div.inline{ display: inline-block; vertical-align: top; margin: 1px 10px 0 0; padding-left: 5px}
-dviv.parent{ margin-bottom: 20px}
+div.parent{ margin-bottom: 20px}
+div.video_container{margin: 10px;}
+a.select_video_type{font-size: 12px; font-weight: bold; margin: 10px 10px 10px 0}
+textarea.embed_tag{height: 100px}

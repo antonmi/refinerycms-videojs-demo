@@ -1,0 +1,17 @@
+<label>Options</label>
+<div class='field'>
+  <%= f.check_box :autoplay, { }, "true", "false" %>
+  <%= f.label :autoplay, :class => 'input_label' %>
+</div>
+<div class='field'>
+  <%= f.check_box :controls, { }, "true", "false" %>
+  <%= f.label :controls, 'Show Controls', :class => 'input_label' %>
+</div>
+<div class='field'>
+  <%= f.check_box :preload, { }, "true", "false" %>
+  <%= f.label :preload, 'Preload video', :class => 'input_label' %>
+</div>
+<div class='field'>
+  <%= f.check_box :loop, { }, "true", "false" %>
+  <%= f.label :loop, 'Loop Video', :class => 'input_label' %>
+</div>

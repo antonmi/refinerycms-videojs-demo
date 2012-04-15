@@ -21,7 +21,10 @@ module Refinery
           :autoplay => "false", :width => "400", :height => "300",
           :controls => "true", :preload => "true", :loop => "true"
       }
-      attr_accessible :title, :poster_id, :video_files_attributes, :position, :config, *CONFIG_OPTIONS.keys
+
+      attr_accessible :title, :poster_id, :video_files_attributes,
+                      :position, :config, :embed_tag, :use_shared,
+                      *CONFIG_OPTIONS.keys
 
       # Create getters and setters
       CONFIG_OPTIONS.keys.each do |option|
@@ -39,6 +42,8 @@ module Refinery
       #####################################
 
       def to_html
+        return embed_tag.html_safe if use_shared
+
         data_setup = []
         CONFIG_OPTIONS.keys.each do |option|
           if option && (option != :width && option != :height)

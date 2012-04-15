@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120412200635) do
+ActiveRecord::Schema.define(:version => 20120415104241) do
 
   create_table "refinery_images", :force => true do |t|
     t.string   "image_mime_type"
@@ -157,6 +157,8 @@ ActiveRecord::Schema.define(:version => 20120412200635) do
     t.string   "config"
     t.string   "title"
     t.integer  "poster_id"
+    t.boolean  "use_shared"
+    t.text     "embed_tag"
   end
 
   create_table "seo_meta", :force => true do |t|
