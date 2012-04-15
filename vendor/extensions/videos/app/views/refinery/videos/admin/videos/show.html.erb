@@ -1,1 +1,12 @@
-<%= render 'preview' %>
+<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/c/video.js"></script>
+
+<div class="video_container">
+  <%= @video.to_html %>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        parent.window.video_player = $('.video-js');
+    });
+</script>

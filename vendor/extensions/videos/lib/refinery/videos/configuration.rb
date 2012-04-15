@@ -13,7 +13,7 @@ module Refinery
     self.dragonfly_url_format = '/system/videos/:job/:basename.:format'
 
     self.max_file_size = 524288000
-    self.pages_per_dialog = 12
+    self.pages_per_dialog = 10
     self.pages_per_admin_index = 20
 
     # We have to configure these settings after Rails is available.

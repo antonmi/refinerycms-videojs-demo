@@ -9,8 +9,9 @@ Refinery::Videos.configure do |config|
   # contains images and image resize options
   # config.pages_per_dialog_that_have_size_options = 12
 
-  # Configure how many images per page should be displayed in the list of images in the admin area
-  # config.pages_per_admin_index = 20
+  # Configure how many videoss per page should be displayed in the list of images in the admin area
+  config.pages_per_admin_index = 8
+  config.pages_per_dialog = 5
 
   # Configure image sizes
   # config.user_image_sizes = {:small=>"110x110>", :medium=>"225x255>", :large=>"450x450>"}

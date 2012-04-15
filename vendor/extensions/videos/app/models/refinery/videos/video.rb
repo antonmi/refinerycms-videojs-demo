@@ -42,7 +42,10 @@ module Refinery
       #####################################
 
       def to_html
-        return embed_tag.html_safe if use_shared
+        if use_shared
+          update_from_config
+          return embed_tag.html_safe
+        end
 
         data_setup = []
         CONFIG_OPTIONS.keys.each do |option|
@@ -79,6 +82,14 @@ module Refinery
         info.join(' | ')
       end
 
+      ####################################class methods
+      class << self
+        def per_page(dialog = false)
+          dialog ? Videos.pages_per_dialog : Videos.pages_per_admin_index
+        end
+      end
+      #################################################
+
       private
 
       def set_default_config
@@ -86,6 +97,12 @@ module Refinery
           self.send("#{option}=", value)
         end if new_record?
       end
+
+      def update_from_config
+        embed_tag.gsub!(/width="(\d*)?"/, "width=\"#{config[:width]}\"")
+        embed_tag.gsub!(/height="(\d*)?"/, "height=\"#{config[:height]}\"")
+      end
+
 
     end
 

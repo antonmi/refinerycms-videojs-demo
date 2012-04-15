@@ -10,10 +10,11 @@ Refinery::Core::Engine.routes.append do
   namespace :videos, :path => '' do
     namespace :admin, :path => 'refinery' do
       resources :videos do
+        post :append_to_wym
         collection do
           post :update_positions
           get :insert
-          get :append_to_wym
+          get :dialog_preview
         end
       end
       resources :video_files, :only => [:destroy]

@@ -9,8 +9,6 @@ module Refinery
                 :order => "position ASC",
                 :sortable => true
 
-        before_filter :set_mime_types, :only => [:new, :edit, :create, :update]
-
         def show
           @video = Video.find(params[:id])
         end
@@ -22,16 +20,31 @@ module Refinery
         end
 
         def insert
-          @videos = Video.all
+          search_all_videos if searching?
+          puts find_all_videos
+          paginate_videos
         end
 
         def append_to_wym
-          @video = Video.find(params[:id])
+          @video = Video.find(params[:video_id])
+          params['video'].each do |key, value|
+            @video.config[key.to_sym] = value
+          end
           @html_for_wym = @video.to_html
         end
 
-        def set_mime_types
-          @mime_types = Refinery::Videos.config[:whitelisted_mime_types]
+        def dialog_preview
+          @video = Video.find(params[:id].delete('video_'))
+          w, h = @video.config[:width], @video.config[:height]
+          @video.config[:width], @video.config[:height] = 300, 200
+          @preview_html = @video.to_html
+          @video.config[:width], @video.config[:height] = w, h
+        end
+
+        private
+
+        def paginate_videos
+          @videos = @videos.paginate(:page => params[:page], :per_page => Video.per_page(true))
         end
 
       end

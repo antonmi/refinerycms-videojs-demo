@@ -1,21 +1,42 @@
-<div id='dialog_main'>
+<div id='dialog_list'>
+  <%= render '/refinery/admin/search', :url => refinery.insert_videos_admin_videos_path %>
+  <div id='records'>
 
-    <%= render 'existing_videos' %>
+    <%= render 'videos' %>
+  </div>
 
-      <%= render '/refinery/admin/form_actions', :f => nil,
-                 :cancel_url => '',
-                 :hide_delete => true,
-                 :submit_button_text => 'Insert',
-                 :cancel_button_text => t('cancel', :scope => 'refinery.admin.form_actions'),
-                 :cancel_title => nil %>
+  <%= render '/refinery/admin/form_actions', :f => nil,
+             :cancel_url => '',
+             :hide_delete => true,
+             :submit_button_text => 'Insert',
+             :cancel_button_text => t('cancel', :scope => 'refinery.admin.form_actions'),
+             :cancel_title => nil %>
 </div>
+
+<div id='dialog_preview'></div>
+<div id="preview_form"></div>
+
 
 
 <script type="text/javascript">
-  $(function(){
-  $('#submit_button').on('click', function(){
-    var id=$('li.video.selected').attr('id');
-    $.get('<%= refinery.append_to_wym_videos_admin_videos_path %>', {'id' : id}, null, 'script')
-  })
-  })
+    $(function(){
+        $('#submit_button').on('click', function(){
+            $('#preview_form form').submit();
+        })
+    });
+
+    $(function(){
+        $videos = $('#sortable_list li');
+        $videos.attr('style', 'cursor:pointer');
+        $videos.on('click', function(){
+            $videos.removeClass('selected');
+            $(this).addClass('selected');
+            var id = $(this).attr('id');
+            $.get('<%= refinery.dialog_preview_videos_admin_videos_path %>', {'id' : id}, null, 'script')
+        })
+    })
 </script>
+
+<style type="text/css">
+
+</style>
