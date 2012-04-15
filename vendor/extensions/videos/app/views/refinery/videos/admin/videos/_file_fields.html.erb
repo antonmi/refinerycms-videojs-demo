@@ -21,9 +21,7 @@
                 <% else %>
                     <span>Add File</span>
                 <% end %>
-
                 <%= v.file_field :file %>
-
             <% else %>
                 <span>Add File</span>
                 <%= v.file_field :file, :required => true %>
@@ -33,24 +31,31 @@
             <span>Link to source</span>
             <%= v.text_field :external_url, {}.merge(v.object.use_external ? {:required => true} : {}) %>
           </div>
-
         </div>
         <a href='#' onclick="add_field($(this)); return false" class="add_field" style='display: none'><%= refinery_icon_tag("add.png") %>
           <div class="inline">Add source</div>
-        </a>  <% if v.object.persisted?  %>
-            <%= link_to(refinery_icon_tag("delete.png"), refinery.videos_admin_video_file_path(v.object),
+        </a>
+        <% if f.object.persisted? %>
+            <%= link_to(refinery.videos_admin_video_file_path(v.object),
                         :class => "cancel confirm-delete",
                         :title => t('.delete'),
                         :confirm => t('message', :scope => 'refinery.admin.delete', :title => 'file'),
-                        :method => :delete) %>
-
+                        :method => :delete) do %>
+                <div class="inline">Delete source</div>
+                <%= refinery_icon_tag("delete.png") %>
             <% end %>
+        <% else %>
             <a href='#' onclick="remove_field($(this)); return false" class="remove_field" style='display: none'><%= refinery_icon_tag("delete.png")%>
               <div class="inline">Delete source</div>
-        </a>
+            </a>
+        <% end %>
       </div>
+
   <% end %>
 </div>
+
+<% @video.video_files.build %>
+<%= render 'new_file_field', :f => f %>
 
 <div class='field' id='maximum_file_size'>
   <label>
@@ -80,39 +85,5 @@
         });
     }
 
-    function add_field(plus){
-        var $div = plus.parents('div.parent').clone();
-        plus.parents('div.parent').find('a.add_field').hide();
-        plus.parents('div.parent').find('a.remove_field').show();
-        $div.find('a.remove_field').show();
-        var $inputs = $div.find('input');
-        var date = Number(new Date)
-        $.each($inputs, function(){
-            var new_name = $(this).attr('name').replace(/\[\d+\]/,'['+date+']');
-            $(this).attr('name', new_name);
-            var new_id = $(this).attr('id').replace(/_\d+_/,'_'+date+'_');
-            $(this).attr('id', new_id);
-        });
-        $('#file_fields').append($div);
-        radio_control();
-    }
 
-    function remove_field(minus){
-        minus.parents('div.parent').remove();
-        $('div.parent').last().find('a.add_field').show();
-        if ($('div.parent').length > 1) {
-            $('div.parent').last().find('a.remove_field').show();
-        } else {
-            $('div.parent').find('a.remove_field').hide();
-        }
-    }
-
-    $(function(){
-        radio_control();
-        $('div.parent').last().find('a.add_field').show();
-        $without_first = $('div.parent').not($('div.parent').first());
-        if ($('div.parent').length > 1) {
-            $('div.parent').find('a.remove_field').show();
-        }
-    })
 </script>
