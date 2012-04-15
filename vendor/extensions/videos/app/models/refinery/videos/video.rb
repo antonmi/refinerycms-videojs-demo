@@ -57,7 +57,7 @@ module Refinery
         sources = []
         video_files.each do |file|
           if file.use_external
-            sources << ["<source src='#{file.external_url}' type='#{file.file_mime_type}'/>"]
+            sources << ["<source src='#{file.external_url}' type='video/ogg'/>"]
           else
             sources << ["<source src='#{file.url}' type='#{file.file_mime_type}'/>"]
           end if file.exist?
@@ -73,7 +73,7 @@ module Refinery
         info = []
         video_files.each do |file|
           if file.use_external
-            info << "Link: #{file.external_url.scan(/\.(.+$)/).flatten.first}"
+            info << "Link: #{file.external_url.scan(/\w+$/).first}"
           else
             info << "File: #{file.mime_type.split('/').last}"
           end
