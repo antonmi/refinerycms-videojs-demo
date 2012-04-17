@@ -9,6 +9,8 @@ module Refinery
                 :order => "position ASC",
                 :sortable => true
 
+        before_filter :set_embedded, :only => [:new, :create]
+
         def show
           @video = Video.find(params[:id])
         end
@@ -16,7 +18,6 @@ module Refinery
         def new
           @video = Video.new
           @video.video_files.build
-          @embedded = true if params[:embedded]
         end
 
         def insert
@@ -46,6 +47,10 @@ module Refinery
 
         def paginate_videos
           @videos = @videos.paginate(:page => params[:page], :per_page => Video.per_page(true))
+        end
+
+        def set_embedded
+          @embedded = true if params['embedded']
         end
 
       end

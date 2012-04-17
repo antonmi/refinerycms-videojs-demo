@@ -8,6 +8,7 @@ module Refinery
       acts_as_indexed :fields => [:title]
 
       validates :title, :presence => true
+      validate :one_source
 
       has_many :video_files,:dependent => :destroy
       accepts_nested_attributes_for :video_files
@@ -103,6 +104,10 @@ module Refinery
         embed_tag.gsub!(/height="(\d*)?"/, "height=\"#{config[:height]}\"")
       end
 
+      def one_source
+        errors.add(:embed_tag, 'Please embed video') if use_shared && embed_tag.empty?
+        errors.add(:video_files, 'Please select at least one source') if !use_shared && video_files.empty?
+      end
 
     end
 

@@ -34,9 +34,6 @@
           </div>
         </div>
         <div class='add_remove_buttons'>
-          <a href='#' onclick="add_field($(this)); return false" class="add_field" style='display: none'><%= refinery_icon_tag("add.png") %>
-            <div class="inline">Add source</div>
-          </a>
           <% if f.object.video_files.count > 1 %>
               <% if f.object.persisted? %>
                   <%= link_to(refinery.videos_admin_video_file_path(v.object),
@@ -53,6 +50,9 @@
                   </a>
               <% end %>
           <% end  %>
+          <a href='#' onclick="add_field($(this)); return false" class="add_field" style='display: none'><%= refinery_icon_tag("add.png") %>
+            <div class="inline">Add source</div>
+          </a>
         </div>
       </div>
 
