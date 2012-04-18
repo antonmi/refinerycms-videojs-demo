@@ -34,7 +34,12 @@
     function set_in_text_area_width(what, input){
         var val = input.val();
         var text = $('textarea.embed_tag').val();
-        var new_text = text.replace(/width="(\d*|\0)"/, what + '="' + val + '"');
+        var new_text = ''
+        if (what == 'width'){
+            new_text = text.replace(/width="(\d*|\0)"/, 'width="' + val + '"');
+        } else if (what == 'height') {
+            new_text = text.replace(/height="(\d*|\0)"/, 'height="' + val + '"');
+        }
         $('textarea.embed_tag').val(new_text);
     }
 </script>
