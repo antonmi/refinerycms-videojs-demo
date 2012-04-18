@@ -54,6 +54,7 @@ module Refinery
             data_setup << "\"#{option}\": #{config[option] || '\"auto\"'}"
           end
         end
+
         data_setup << "\"poster\": \"#{poster.url}\"" if poster
         sources = []
         video_files.each do |file|
@@ -94,14 +95,21 @@ module Refinery
       private
 
       def set_default_config
-        CONFIG_OPTIONS.each do |option, value|
-          self.send("#{option}=", value)
-        end if new_record?
+        if new_record? && config.empty?
+          CONFIG_OPTIONS.each do |option, value|
+            self.send("#{option}=", value)
+          end
+        end
       end
 
       def update_from_config
         embed_tag.gsub!(/width="(\d*)?"/, "width=\"#{config[:width]}\"")
         embed_tag.gsub!(/height="(\d*)?"/, "height=\"#{config[:height]}\"")
+        #fix iframe overlay
+        if embed_tag.include? 'iframe'
+          embed_tag =~ /src="(\S+)"/
+          embed_tag.gsub!(/src="\S+"/, "src=\"#{$1}?wmode=transparent\"")
+        end
       end
 
       def one_source

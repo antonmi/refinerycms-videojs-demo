@@ -58,6 +58,16 @@ module Refinery
             video.config[:preload].should == 'true'
           end
         end
+
+        context 'should save config' do
+          let(:video) { Video.new(:use_shared => true, :embed_tag => 'video', :title => 'video') }
+          it 'should save height' do
+            video.config[:height] = 100
+            video.save!
+            video.config[:height].should == 100
+          end
+        end
+
       end
 
       describe 'video to_html method' do
@@ -84,6 +94,7 @@ module Refinery
           it 'should return video tag with iframe' do
             video.to_html.should match(/^<iframe.*<\/iframe>$/)
             video.to_html.should match(/www\.youtube\.com/)
+            video.to_html.should match(/wmode=transparent/)
           end
 
           before do

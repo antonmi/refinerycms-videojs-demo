@@ -1,3 +1,4 @@
+<% @embedded = true if @video.use_shared  %>
 <%= form_for [refinery, :videos_admin, @video] do |f| %>
     <%= hidden_field_tag(:embedded, true) if @embedded %>
     <%= render '/refinery/admin/error_messages',
