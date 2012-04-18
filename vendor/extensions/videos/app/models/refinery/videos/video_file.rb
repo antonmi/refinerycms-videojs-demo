@@ -21,15 +21,14 @@ module Refinery
 
       ########################### Validations
       validates :file, :presence => true, :unless => :use_external?
-      #validates :file_name, :presence => true, :unless => :use_external
       validates :mime_type, :inclusion => { :in =>  Refinery::Videos.config[:whitelisted_mime_types],
                                             :message => "Wrong file mime_type" }, :if => :file_name?
       validates :external_url, :presence => true, :if => :use_external?
       #######################################
 
-      def title
-        CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
-      end
+      #def title
+      #  CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
+      #end
 
       def exist?
         use_external ? external_url.present? : file.present?

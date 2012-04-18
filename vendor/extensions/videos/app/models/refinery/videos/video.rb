@@ -105,7 +105,7 @@ module Refinery
       end
 
       def one_source
-        errors.add(:embed_tag, 'Please embed video') if use_shared && embed_tag.empty?
+        errors.add(:embed_tag, 'Please embed video') if use_shared && embed_tag.nil?
         errors.add(:video_files, 'Please select at least one source') if !use_shared && video_files.empty?
       end
 
