@@ -22,7 +22,7 @@ module Refinery
 
         def insert
           search_all_videos if searching?
-          puts find_all_videos
+          find_all_videos
           paginate_videos
         end
 

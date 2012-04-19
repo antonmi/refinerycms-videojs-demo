@@ -9,6 +9,12 @@ group :development, :test do
   gem 'sqlite3'
   gem 'pry-rails'
   gem 'refinerycms-testing', '~> 2.0.3'
+  gem 'factory_girl_rails'
+  gem 'generator_spec'
+  gem 'simplecov', :require => false
+  gem 'spork'
+  gem "capybara-webkit"
+  gem 'selenium-webdriver'
 end
 
 group :assets do

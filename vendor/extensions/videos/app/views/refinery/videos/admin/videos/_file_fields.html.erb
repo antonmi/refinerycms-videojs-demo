@@ -41,8 +41,8 @@
                               :title => t('.delete'),
                               :confirm => t('message', :scope => 'refinery.admin.delete', :title => 'file'),
                               :method => :delete) do %>
-                      <div class="inline">Delete source</div>
                       <%= refinery_icon_tag("delete.png") %>
+                      <div class="inline">Delete source</div>
                   <% end %>
               <% else %>
                   <a href='#' onclick="remove_field($(this)); return false" class="remove_field" style='display: none'><%= refinery_icon_tag("delete.png")%>

@@ -4,7 +4,7 @@ module Refinery
   module Videos
     describe VideoFile do
       before(:each) do
-        file = File.new Refinery.roots(:'refinery/videos').join('spec/support/fixtures/video.flv')
+        file = File.new(File.join(Rails.root, 'spec/support/fixtures/video.flv'))
         @video_file = FactoryGirl.create(:video_file, :file => file)
       end
 
