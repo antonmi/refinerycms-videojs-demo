@@ -71,7 +71,7 @@ module Refinery
 
 
       def index_short_info
-        return "Shared Source" if use_shared
+        return 'Shared Source' if use_shared
         info = []
         video_files.each do |file|
           if file.use_external

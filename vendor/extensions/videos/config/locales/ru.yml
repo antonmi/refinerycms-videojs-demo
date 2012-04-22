@@ -50,13 +50,18 @@ en:
              add_source: Добавить источник
              delete_source: Удалить источник
           embed_video_fields:
-            copy_embed_tag_here: Скопируйте код HMTL
+            copy_embed_tag_here: Скопируйте HMTL код
           form_option_fields:
             options: Настройки
             autoplay: Автоматическое воспроизведение
-            show_ontrols: Показывать панель управления
+            show_ontrols: Панель управления
             preload_video: Загружать автоматически
             loop_video: Повтор
+          insert:
+            insert: Вставить
+          preview_form:
+            width: Ширина
+            height: Высота
       videos:
         show:
           other: Другие видео

@@ -6,7 +6,7 @@ module Refinery
         crudify :'refinery/videos/video',
                 :title_attribute => 'title',
                 :xhr_paging => true,
-                :order => "position ASC",
+                :order => 'position ASC',
                 :sortable => true
 
         before_filter :set_embedded, :only => [:new, :create]

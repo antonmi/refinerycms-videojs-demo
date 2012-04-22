@@ -1,14 +1,12 @@
 <div id='dialog_list'>
   <%= render '/refinery/admin/search', :url => refinery.insert_videos_admin_videos_path %>
   <div id='records'>
-
     <%= render 'videos' %>
   </div>
-
   <%= render '/refinery/admin/form_actions', :f => nil,
              :cancel_url => '',
              :hide_delete => true,
-             :submit_button_text => 'Insert',
+             :submit_button_text => t('.insert'),
              :cancel_button_text => t('cancel', :scope => 'refinery.admin.form_actions'),
              :cancel_title => nil %>
 </div>
@@ -34,7 +32,3 @@
         })
     })
 </script>
-
-<style type="text/css">
-
-</style>

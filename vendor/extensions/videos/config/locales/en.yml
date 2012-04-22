@@ -57,6 +57,11 @@ en:
             show_ontrols: Show controls
             preload_video: Preload video
             loop_video: Loop video
+          insert:
+            insert: Insert
+          preview_form:
+            width: Width
+            height: Height
       videos:
         show:
           other: Other Videos

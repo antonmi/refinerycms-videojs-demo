@@ -5,9 +5,6 @@
   </span>
   <% unless action_name =~ /insert/   %>
   <span class='actions'>
-    <%#= link_to refinery_icon_tag('page_white_put.png'),
-                    video.url,
-                    :title => t('.download', :size => number_to_human_size(video.size)) %>
     <%= link_to refinery_icon_tag('eye.png'), refinery.videos_admin_video_path(video, :dialog => true),
                 :title => t('.view_live_html'),
                 :target => "_blank" %>
