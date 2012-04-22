@@ -2,28 +2,28 @@
     <div class="new_field" style="display: none">
       <label class="inline">
         <%= v.radio_button :use_external, false, :class => "use_file", :checked => true %>
-        <span>Use file</span>
+        <span><%= t('.use_file') %></span>
       </label>
       <label class="inline">
         <%= v.radio_button :use_external, true, :class => "use_external" %>
-        <span>Use external source</span>
+        <span><%= t('.use_external_source') %></span>
       </label>
       <div class='field'>
         <div class="use_file">
-          <span>Add File</span>
+          <span><%= t('.add_file') %></span>
           <%= v.file_field :file, :id => "new_file_field", :required => true %>
         </div>
         <div class="use_external" style='display: none'>
-          <span>Link to source</span>
+          <span><%= t('.link_to_source') %></span>
           <%= v.text_field :external_url, :id => "new_external_url_field" %>
         </div>
       </div>
       <div class='add_remove_buttons'>
         <a href='#' onclick="remove_field($(this)); return false" class="remove_field"><%= refinery_icon_tag("delete.png")%>
-          <div class="inline">Delete source</div>
+          <div class="inline"><%= t('.delete_source') %></div>
         </a>
         <a href='#' onclick="add_field($(this)); return false" class="add_field"><%= refinery_icon_tag("add.png") %>
-          <div class="inline">Add source</div>
+          <div class="inline"><%= t('.add_source') %></div>
         </a>
       </div>
     </div>

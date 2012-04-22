@@ -1,15 +1,15 @@
-<label>Files</label>
-<div class='tips'>Add files (or links to files) of 'mp4', 'webm', 'flv', 'ogg' types for full browser compability</div>
+<label><%= t('.files') %></label>
+<div class='tips'><%= t('.file_tip') %></div>
 <div id='file_fields'>
   <%= f.fields_for :video_files do |v| %>
       <div class="parent">
         <label class="inline">
           <%= v.radio_button :use_external, false, {:class => "use_file"}.merge(v.object.use_external ? {} : {:checked => true}) %>
-          <span>Use file</span>
+          <span><%= t('.use_file') %></span>
         </label>
         <label class="inline">
           <%= v.radio_button :use_external, true, {:class => "use_external"}.merge(v.object.use_external ? {:checked => true} : {}) %>
-          <span>Use external source</span>
+          <span><%= t('.use_external_source') %></span>
         </label>
 
         <div class='field'>
@@ -20,16 +20,16 @@
                                 :title => v.object.file_name) %>
                     <em><%= t('.or') %> </em><%= t('.replace') %>
                 <% else %>
-                    <span>Add File</span>
+                    <span><%= t('.add_file') %></span>
                 <% end %>
                 <%= v.file_field :file %>
             <% else %>
-                <span>Add File</span>
+                <span><%= t('.add_file') %></span>
                 <%= v.file_field :file, {}.merge(v.object.use_external ? {} : {:required => true}) %>
             <% end %>
           </div>
           <div class="use_external" <%= "style='display: none;'" unless v.object.use_external %>>
-            <span>Link to source</span>
+            <span><%= t('.link_to_source') %></span>
             <%= v.text_field :external_url, {}.merge(v.object.use_external ? {:required => true} : {}) %>
           </div>
         </div>
@@ -42,16 +42,16 @@
                               :confirm => t('message', :scope => 'refinery.admin.delete', :title => 'file'),
                               :method => :delete) do %>
                       <%= refinery_icon_tag("delete.png") %>
-                      <div class="inline">Delete source</div>
+                      <div class="inline"><%= t('.delete_source') %></div>
                   <% end %>
               <% else %>
                   <a href='#' onclick="remove_field($(this)); return false" class="remove_field" style='display: none'><%= refinery_icon_tag("delete.png")%>
-                    <div class="inline">Delete source</div>
+                    <div class="inline"><%= t('.delete_source') %></div>
                   </a>
               <% end %>
           <% end  %>
           <a href='#' onclick="add_field($(this)); return false" class="add_field" style='display: none'><%= refinery_icon_tag("add.png") %>
-            <div class="inline">Add source</div>
+            <div class="inline"><%= t('.add_source') %></div>
           </a>
         </div>
       </div>

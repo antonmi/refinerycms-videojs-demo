@@ -36,6 +36,10 @@ div.tips{
     font-style: italic;
 }
 
+div.use_file{
+    padding-bottom: 5px;
+    padding-top: 2px;
+}
 a.select_video_type{
     font-size: 12px;
     margin: 10px 10px 10px 0
@@ -88,3 +92,4 @@ div#preview_form div.options{
 div#dialog_list #records{
     width: 100%
 }
+
