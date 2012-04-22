@@ -39,6 +39,19 @@ module Refinery
         @video_file.exist?.should be_false
       end
 
+      it 'should determine mime_type from url' do
+        @video_file = VideoFile.create(:use_external => true, :external_url => 'www')
+        @video_file.file_mime_type.should == 'video/mp4'
+        @video_file.update_attributes(:external_url => 'www.site.com/video.mp4')
+        @video_file.file_mime_type.should == 'video/mp4'
+        @video_file.update_attributes(:external_url => 'www.site.com/video.flv')
+        @video_file.file_mime_type.should == 'video/flv'
+        @video_file.update_attributes(:external_url => 'www.site.com/video.ogg')
+        @video_file.file_mime_type.should == 'video/ogg'
+        @video_file.update_attributes(:external_url => 'www.site.com/video.webm')
+        @video_file.file_mime_type.should == 'video/webm'
+      end
+
     end
   end
 end

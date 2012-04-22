@@ -10,7 +10,7 @@ module Refinery
       validates :title, :presence => true
       validate :one_source
 
-      has_many :video_files,:dependent => :destroy
+      has_many :video_files, :dependent => :destroy
       accepts_nested_attributes_for :video_files
 
       belongs_to :poster, :class_name => '::Refinery::Image'
@@ -59,7 +59,7 @@ module Refinery
         sources = []
         video_files.each do |file|
           if file.use_external
-            sources << ["<source src='#{file.external_url}' type='video/ogg'/>"]
+            sources << ["<source src='#{file.external_url}' type='#{file.file_mime_type}'/>"]
           else
             sources << ["<source src='#{file.url}' type='#{file.file_mime_type}'/>"]
           end if file.exist?

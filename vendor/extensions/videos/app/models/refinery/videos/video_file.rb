@@ -9,6 +9,8 @@ module Refinery
       attr_accessible :file, :file_mime_type, :position, :use_external, :external_url
       belongs_to :video
 
+      MIME_TYPES = {'.mp4' => 'mp4', '.flv' => 'flv', '.webm' => 'webm', '.ogg' => 'ogg', '.ogv' => 'ogg'}
+
       ############################ Dragonfly
       ::Refinery::Videos::Dragonfly.setup!
       video_accessor :file
@@ -26,13 +28,27 @@ module Refinery
       validates :external_url, :presence => true, :if => :use_external?
       #######################################
 
-      #def title
-      #  CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
-      #end
+      before_save :set_mime_type
+      before_update :set_mime_type
 
       def exist?
         use_external ? external_url.present? : file.present?
       end
+
+      private
+
+      def set_mime_type
+        if use_external
+          type = external_url.scan(/\.\w+$/)
+          if type.present? && MIME_TYPES.has_key?(type.first)
+            self.file_mime_type = "video/#{MIME_TYPES[type.first]}"
+          else
+            self.file_mime_type = 'video/mp4'
+          end
+        end
+
+      end
+
 
     end
   end

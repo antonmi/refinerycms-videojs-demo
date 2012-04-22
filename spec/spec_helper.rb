@@ -1,6 +1,8 @@
 require 'simplecov'
 SimpleCov.start 'rails'
 
+
+
 def setup_environment
   # Configure Rails Environment
   ENV["RAILS_ENV"] ||= 'test'
@@ -10,6 +12,8 @@ def setup_environment
   require 'rspec/rails'
   require 'capybara/rspec'
   require 'capybara/rails'
+
+
 
   Rails.backtrace_cleaner.remove_silencers!
 
@@ -53,3 +57,19 @@ else
   setup_environment
   each_run
 end
+
+
+
+silence_stream(STDOUT){ load("#{Rails.root.to_s}/db/schema.rb")}
+
+#Capybara use the same connection
+class ActiveRecord::Base
+  mattr_accessor :shared_connection
+  @@shared_connection = nil
+
+  def self.connection
+    @@shared_connection || retrieve_connection
+  end
+end
+ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+
