@@ -12,7 +12,7 @@ module Refinery
     self.dragonfly_secret = Refinery::Core.dragonfly_secret
     self.dragonfly_url_format = '/system/videos/:job/:basename.:format'
     self.trust_file_extensions = false
-    self.max_file_size =  3145728
+    self.max_file_size = 6291456
     self.pages_per_dialog = 7
     self.pages_per_admin_index = 20
     self.whitelisted_mime_types = %w(video/mp4 video/x-flv application/ogg video/webm video/flv video/ogg)
