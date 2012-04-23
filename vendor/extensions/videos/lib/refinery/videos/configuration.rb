@@ -6,15 +6,16 @@ module Refinery
                     :max_file_size, :pages_per_dialog, :pages_per_admin_index,
                     :s3_backend, :s3_bucket_name, :s3_region,
                     :s3_access_key_id, :s3_secret_access_key,
-                    :datastore_root_path
+                    :datastore_root_path, :whitelisted_mime_types
 
     self.dragonfly_insert_before = 'ActionDispatch::Callbacks'
     self.dragonfly_secret = Refinery::Core.dragonfly_secret
     self.dragonfly_url_format = '/system/videos/:job/:basename.:format'
 
     self.max_file_size = 524288000
-    self.pages_per_dialog = 10
+    self.pages_per_dialog = 7
     self.pages_per_admin_index = 20
+    self.whitelisted_mime_types = %w(video/mp4 video/x-flv application/ogg video/webm video/flv video/ogg)
 
     # We have to configure these settings after Rails is available.
     # But a non-nil custom option can still be provided
