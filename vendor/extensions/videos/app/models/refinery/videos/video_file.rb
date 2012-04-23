@@ -35,6 +35,14 @@ module Refinery
         use_external ? external_url.present? : file.present?
       end
 
+      def short_info
+        if use_external
+           ['.link', external_url]
+        else
+           ['.file', file_name]
+        end
+      end
+
       private
 
       def set_mime_type

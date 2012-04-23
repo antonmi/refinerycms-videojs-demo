@@ -1,7 +1,10 @@
 <li style="min-height: 35px" class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(video) -%>">
   <span class='title'>
     <%= video.title %>
-    <span class='short_info'>(<%= video.index_short_info %>)</span>
+    <span class='short_info'>(
+      <% video.short_info.each do |info| %>
+       <%= "#{t(info[0])}: #{info[1]}" %>
+    <% end %>)</span>
   </span>
   <% unless action_name =~ /insert/   %>
   <span class='actions'>

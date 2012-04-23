@@ -1,4 +1,4 @@
-en:
+ru:
   refinery:
     admin:
       dashboard:
@@ -22,6 +22,9 @@ en:
             view_live_html: Предварительный просмотр <br/><em>(открывается в новом окне)</em>
             edit: Редактировать видео
             delete: Удалить видео
+            file: Файл
+            link: Ссылка
+            shared_source: Встроенное
           new:
             use_files: Использовать файлы
             use_embedded_video: Ислользовать встроенное видео
@@ -62,6 +65,7 @@ en:
           preview_form:
             width: Ширина
             height: Высота
+
       videos:
         show:
           other: Другие видео

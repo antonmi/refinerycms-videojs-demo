@@ -70,18 +70,14 @@ module Refinery
       end
 
 
-      def index_short_info
-        return 'Shared Source' if use_shared
+      def short_info
+        return [['.shared_source', embed_tag.scan(/src=".+?"/).first]] if use_shared
         info = []
         video_files.each do |file|
-          if file.use_external
-            info << "Link: #{file.external_url.scan(/\w+$/).first}"
-          else
-            info << "File: #{file.mime_type.split('/').last}"
-          end
+          info << file.short_info
         end
 
-        info.join(' | ')
+        info
       end
 
       ####################################class methods

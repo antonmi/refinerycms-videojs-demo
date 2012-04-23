@@ -22,9 +22,12 @@ en:
             view_live_html: View this video live <br/><em>(opens in a new window)</em>
             edit: Edit this video
             delete: Remove this video forever
+            file: File
+            link: Link
+            shared_source: Embedded
           new:
             use_files: Use files
-            use_embedded_video: Use ebmedded video
+            use_embedded_video: Use embedded video
           form:
             title: Title
             poster: Poster

@@ -36,8 +36,8 @@ module Refinery
 
           context "valid data for embed video" do
             it "should succeed" do
-              click_link "Use Embedded Video"
-              fill_in "Title", :with => "Test Video"
+              click_link "Use embedded video"
+              fill_in "video_title", :with => "Test Video"
               fill_in "video_embed_tag", :with => '<iframe src="http://player.vimeo.com/video/39432556" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
               click_button "Save"
 
@@ -48,7 +48,7 @@ module Refinery
 
           context "valid data for file with url" do
             it "should succeed" do
-              fill_in "Title", :with => "Test Video"
+              fill_in "video_title", :with => "Test Video"
               choose 'Use external source'
               fill_in 'video_video_files_attributes_0_external_url', :with => 'url'
               click_button "Save"
@@ -59,7 +59,7 @@ module Refinery
 
           context "valid data for file with file" do
             it "should succeed" do
-              fill_in "Title", :with => "Test Video"
+              fill_in "video_title", :with => "Test Video"
               file = File.join(Rails.root, 'spec/support/fixtures/video.flv')
               attach_file('video_video_files_attributes_0_file', file)
               click_button "Save"
@@ -78,7 +78,7 @@ module Refinery
             within ".actions" do
               click_link "Edit this video"
             end
-            fill_in "Title", :with => "A different file_name"
+            fill_in "video_title", :with => "A different file_name"
             click_button "Save"
             page.should have_content("'A different file_name' was successfully updated.")
             page.should have_no_content("Test Video")

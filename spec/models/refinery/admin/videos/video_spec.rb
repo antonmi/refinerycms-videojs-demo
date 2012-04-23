@@ -108,14 +108,14 @@ module Refinery
         end
       end
 
-      describe 'index_short_info' do
+      describe 'short_info' do
         let(:video) { FactoryGirl.build(:valid_video) }
         let(:video_file) { FactoryGirl.build(:video_file, :use_external => false) }
         it 'should return short info' do
-          video.index_short_info.should match(/Shared source/i)
+          video.short_info.to_s.should match(/.shared_source/i)
           video.use_shared = false
           video.video_files << video_file
-          video.index_short_info.should match(/file/i)
+          video.short_info.to_s.should match(/.file/i)
         end
       end
 
