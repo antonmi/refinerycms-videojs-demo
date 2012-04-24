@@ -1,8 +1,10 @@
 PATH
   remote: vendor/extensions
   specs:
-    refinerycms-videos (1.0)
-      refinerycms-core (~> 2.0.3)
+    refinerycms-videojs (0.5.5)
+      dragonfly
+      rack-cache
+      refinerycms-core
 
 GEM
   remote: https://rubygems.org/
@@ -293,7 +295,7 @@ DEPENDENCIES
   refinerycms (~> 2.0.0)
   refinerycms-i18n (~> 2.0.0)
   refinerycms-testing (~> 2.0.3)
-  refinerycms-videos!
+  refinerycms-videojs!
   sass-rails (~> 3.2.3)
   selenium-webdriver
   simplecov

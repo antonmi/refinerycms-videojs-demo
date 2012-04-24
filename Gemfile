@@ -30,7 +30,7 @@ gem 'therubyracer'
 gem 'refinerycms', '~> 2.0.0'
 gem 'refinerycms-i18n', '~> 2.0.0'
 
-gem 'refinerycms-videos', :path => 'vendor/extensions'
+gem 'refinerycms-videojs', :path => 'vendor/extensions'
 
 
 # The Heroku gem allows you to interface with Heroku's API
