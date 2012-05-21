@@ -1,5 +1,9 @@
 Demo repo of refinerycms-videojs gem.
+
 See:
+
 http://rubygems.org/gems/refinerycms-videojs
+
 https://github.com/adexin-team/refinerycms-videojs
+
 http://refinerycms-videojs-demo.herokuapp.com
