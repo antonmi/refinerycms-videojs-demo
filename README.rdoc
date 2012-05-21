@@ -1,4 +1,4 @@
-Demo repo of refinerycms-videojs gem.
+Refinerycms-videojs gem demo repo.
 
 See:
 
