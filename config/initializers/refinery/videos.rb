@@ -1,6 +1,6 @@
 Refinery::Videos.configure do |config|
     #Configures the maximum allowed upload size (in bytes) for an video file
-    #config.max_file_size = 524288000
+    config.max_file_size = 10_000_000
 
     # Configure how many videos per page should be displayed in the list of images in the admin area
     #config.pages_per_admin_index =  20

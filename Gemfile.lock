@@ -1,7 +1,7 @@
 PATH
   remote: vendor/extensions
   specs:
-    refinerycms-videojs (0.5.5)
+    refinerycms-videojs (0.5.5.1)
       dragonfly
       rack-cache
       refinerycms-core
