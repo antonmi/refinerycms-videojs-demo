@@ -1,5 +1,7 @@
 Refinerycms-videojs gem demo repo.
 
+Use demo@adexin.com / demo@adexin.com to login.
+
 See:
 
 http://rubygems.org/gems/refinerycms-videojs
